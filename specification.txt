@@ -1,0 +1,14 @@
+Users must be able to create/edit/delete an account.
+Users must be able to log in and log out of an account.
+Users must be able to view a sandwich's image/list of ingredients.
+Users must be able to view comments on a sandwich.
+Users must be able to view the rating of a sandwich.
+Users must be able to view the list of available ingredients.
+Users must be able to view the nutritional values of ingredients and sandwiches.
+Users must be able to sort sandwiches by best, worst and most controversial.
+Users must be able to select a category of sandwiches.
+When logged in, users can create/edit/delete a sandwich using the list of ingrediants.
+When logged in, users can comment on a sandwich.
+When logged in(or not??), users can rate a sandwich.
+When logged in, users can share a sandwich to Facebook/Twitter/Google+.
+When logged in, users can submit suggestions for new ingredients.
