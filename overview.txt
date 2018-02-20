@@ -1,4 +1,5 @@
-                    Which Sandwich
+
+Which Sandwich
 
 A website for designing, sharing and rating sandwiches.
 Users can list their favourite sandwiches using an expandable list of ingredients,
@@ -8,3 +9,5 @@ Users can vote on other's sandwiches (thumbs or stars system).
 
 Visitors will see a ranking of the best, worst and most controversial sandwiches.
 Possible for visitors to vote anonymously when not logged in? Lower weighted vote, perhaps.
+But this would mean that one can vote as many times as he wants for a sandwich (as we cannot
+distinguish different visitors?).
