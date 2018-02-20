@@ -6,8 +6,4 @@ Users can list their favourite sandwiches using an expandable list of ingredient
 as well as submit suggestions for new ingredients to the admin for review.
 A picture of their sandwich can optionally be uploaded.
 Users can vote on other's sandwiches (thumbs or stars system).
-
 Visitors will see a ranking of the best, worst and most controversial sandwiches.
-Possible for visitors to vote anonymously when not logged in? Lower weighted vote, perhaps.
-But this would mean that one can vote as many times as he wants for a sandwich (as we cannot
-distinguish different visitors?).
