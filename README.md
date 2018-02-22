@@ -9,3 +9,6 @@
 [Sign Up/In](https://www.draw.io/#Uhttps%3A%2F%2Fraw.githubusercontent.com%2F2268563%2Fwhich-sandwich%2Fmaster%2Fwireframes%2Fsign_in_up.xml)
 
 [Template](https://www.draw.io/#Uhttps%3A%2F%2Fraw.githubusercontent.com%2F2268563%2Fwhich-sandwich%2Fmaster%2Fwireframes%2Ftemplate.xml)
+
+### Preview System Architecture Diagram
+[System Architecture Diagram](https://www.draw.io/#Uhttps%3A%2F%2Fraw.githubusercontent.com%2F2268563%2Fwhich-sandwich%2Fmaster%2Fsystem_architecture_diagram.xml)
