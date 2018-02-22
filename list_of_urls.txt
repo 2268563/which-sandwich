@@ -1,0 +1,13 @@
+/home
+/about
+/SignUp
+/SignIn
+/SignIn/MyAccount
+/SignIn/MySandwiches
+/SignIn/MyFavourites
+/SignIn/create
+/browse
+/browse/top
+/browse/new
+/browse/controversial
+/browse/SandwichName
