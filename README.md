@@ -6,7 +6,9 @@
 ### Preview Wireframes
 [Home](https://www.draw.io/#Uhttps%3A%2F%2Fraw.githubusercontent.com%2F2268563%2Fwhich-sandwich%2Fmaster%2Fwireframes%2Fhome.xml)
 
-[Sign Up/In](https://www.draw.io/#Uhttps%3A%2F%2Fraw.githubusercontent.com%2F2268563%2Fwhich-sandwich%2Fmaster%2Fwireframes%2Fsign_in_up.xml)
+[Sign Up](https://www.draw.io/#Uhttps%3A%2F%2Fraw.githubusercontent.com%2F2268563%2Fwhich-sandwich%2Fmaster%2Fwireframes%2Fsign_in.xml)
+
+[Sign In](https://www.draw.io/#Uhttps%3A%2F%2Fraw.githubusercontent.com%2F2268563%2Fwhich-sandwich%2Fmaster%2Fwireframes%2Fsign_up.xml)
 
 [Template](https://www.draw.io/#Uhttps%3A%2F%2Fraw.githubusercontent.com%2F2268563%2Fwhich-sandwich%2Fmaster%2Fwireframes%2Ftemplate.xml)
 
