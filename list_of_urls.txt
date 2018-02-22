@@ -2,10 +2,10 @@
 /about
 /SignUp
 /SignIn
-/SignIn/MyAccount
-/SignIn/MySandwiches
-/SignIn/MyFavourites
-/SignIn/create
+/MyAccount
+/MyAccount/MySandwiches
+/MyAccount/MyFavourites
+/CreateSandwich
 /browse
 /browse/top
 /browse/new
