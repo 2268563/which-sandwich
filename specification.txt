@@ -4,7 +4,7 @@ Users must be able to view a sandwich's image/list of ingredients.
 Users must be able to view comments on a sandwich.
 Users must be able to view the rating of a sandwich.
 Users must be able to view the calories of ingredients and sandwiches.
-Users must be able to sort sandwiches by top, worst and most controversial.
+Users must be able to sort sandwiches by top, latest and most controversial.
 When logged in, users can create/edit/delete a sandwich using the list of ingrediants.
 When logged in, users can comment on a sandwich.
 When logged in, users can rate a sandwich.
