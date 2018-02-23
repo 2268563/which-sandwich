@@ -2,8 +2,7 @@
 Which Sandwich
 
 A website for designing, sharing and rating sandwiches.
-Users can list their favourite sandwiches using an expandable list of ingredients,
-as well as submit suggestions for new ingredients to the admin for review.
+Users can list their favourite sandwiches using an expandable list of ingredients.
 A picture of their sandwich can optionally be uploaded.
 Users can vote on other's sandwiches (thumbs or stars system).
-Visitors will see a ranking of the best, worst and most controversial sandwiches.
+Visitors will see a ranking of the best, latest and most controversial sandwiches.
