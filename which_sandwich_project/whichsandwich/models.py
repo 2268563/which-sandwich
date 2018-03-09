@@ -9,10 +9,9 @@ class User(models.Model):
 
 class Sandwich(models.Model):
     creator = models.ForeignKey(User, on_delete=models.PROTECT)
-    name = models.CharField(max_length=254, unique=True)
-    image = models.ImageField()
+    name = models.CharField(max_length=256, unique=True)
+    image = models.ImageField(blank=True)
     ingredients = models.ManyToManyField('Ingredient')
-    comments = models.ManyToManyField('Comment')
 
     def __str__(self):
         return self.name
@@ -28,8 +27,9 @@ class Ingredient(models.Model):
         return self.name
 
 class Comment(models.Model):
-    comment = models.TextField()
     user = models.ForeignKey(User, on_delete=models.PROTECT)
+    sandwich = models.ForeignKey(Sandwich, on_delete=models.PROTECT)
+    comment = models.TextField()
 
     def __str__(self):
         return self.comment
