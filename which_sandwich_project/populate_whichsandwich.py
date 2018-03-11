@@ -91,7 +91,7 @@ def populate():
     # Populate user favourites lists
     print(" - Populating user favourites")
     for u in user_objects:
-        u.favourites.add(*random_favourites(sandwich_objects))
+        u.favourites.add(*rand_selection(sandwich_objects, 0))
         u.save()
 
 def add_user(username, email):
@@ -112,7 +112,7 @@ def add_sandwich(creator, name, ingredients):
     for ingr in ingredients:
         s.ingredients.add(ingr)
     s.likes = random.randint(0,10)
-    s.dislikes = random.randint(0,10)
+    s.dislikes = random.randint(0,5)
     s.save()
     return s
 
@@ -123,13 +123,7 @@ def add_comment(user, sandwich, comment):
 
 def random_sandwich(users, ingredients):
     creator = users[random.randint(0, len(users)-1)]
-    used_ingr = []
-
-    ingredients = ingredients[:]
-    ingr_total = random.randint(1, math.ceil(len(ingredients)/2))
-
-    for i in range(ingr_total):
-        used_ingr.append(ingredients.pop(random.randint(0,len(ingredients)-1)))
+    used_ingr = rand_selection(ingredients, 1)
 
     # Sort ingredients to avoid duplicates. e.g. Cheese and Ham / Ham and Cheese
     used_ingr.sort(key=lambda k:k.name)
@@ -150,11 +144,13 @@ def random_comment(users, sandwiches, comments):
 def rand_selector(l):
     return l[random.randint(0,len(l)-1)]
 
-def random_favourites(sandwiches):
-    favourites = []
-    for i in range(random.randint(0, len(sandwiches)-1)):
-        favourites.append(sandwiches[i])
-    return favourites
+def rand_selection(items, minimum):
+    items = items[:]
+    total = random.randint(minimum, math.ceil(len(items)/2))
+    selected_items = []
+    for i in range(total):
+        selected_items.append(items.pop(random.randint(0, len(items)-1)))
+    return selected_items
 
 if __name__ == '__main__':
     print("Starting Which Sandwich population script...")
