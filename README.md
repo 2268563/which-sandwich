@@ -1,12 +1,29 @@
 # Which Sandwich
 
-## Setting up the virtual environment
+## Setting Up the Virtual Environment
 
 1. Check that you have Python 3.x installed with `python --version`.
 2. Create a virtual environment using `mkvirtualenv which_sandwich`.
 3. Make sure that the virtual environment is activated (use `workon which_sandwich` if in doubt) and run `pip install -r requirements.txt`.
 
 We're using Python 3.x and Django 2.0.2 for this project.
+
+## Populating a Local Database File
+
+The database file is not committed to GitHub.
+
+1. Run `python manage.py migrate` to build the database schema from the models.
+2. Create an admin profile with `python manage.py createsuperuser`. This can then be used to log in at [/admin](127.0.0.1:8000/admin).
+3. Run the population script with `python populate_whichsandwich.py`.
+
+To reset everything to a clean database just delete the db.sqlite3 file and perform the above steps again.
+
+#### The Population Script
+* Randomly generates sandwiches from given ingredients.
+* Fake users are predefined but more can be added easily if you wish.
+* Comments are also predefined but are randomly assigned to sandwiches and commenters.
+* User favourites are randomly selected.
+* Can be run multiple times to generate more sandwiches.
 
 ## Document Previews
 
