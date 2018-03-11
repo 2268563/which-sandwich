@@ -13,7 +13,7 @@ We're using Python 3.x and Django 2.0.2 for this project.
 The database file is not committed to GitHub.
 
 1. Run `python manage.py migrate` to build the database schema from the models.
-2. Create an admin profile with `python manage.py createsuperuser`. This can then be used to log in at [/admin](127.0.0.1:8000/admin).
+2. Create an admin profile with `python manage.py createsuperuser`.
 3. Run the population script with `python populate_whichsandwich.py`.
 
 To reset everything to a clean database just delete the db.sqlite3 file and perform the above steps again.
