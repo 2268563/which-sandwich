@@ -91,7 +91,7 @@ def populate():
     # Populate user favourites lists
     print(" - Populating user favourites")
     for u in user_objects:
-        u.favourites.add(*rand_selection(sandwich_objects, 0))
+        u.profile.favourites.add(*rand_selection(sandwich_objects, 0))
         u.save()
 
 def add_user(username, email):
@@ -122,7 +122,7 @@ def add_comment(user, sandwich, comment):
     return c
 
 def random_sandwich(users, ingredients):
-    creator = users[random.randint(0, len(users)-1)]
+    creator = users[random.randint(0, len(users)-1)].profile
     used_ingr = rand_selection(ingredients, 1)
 
     # Sort ingredients to avoid duplicates. e.g. Cheese and Ham / Ham and Cheese
@@ -136,7 +136,7 @@ def random_sandwich(users, ingredients):
     return {'creator':creator, 'name':name, 'ingredients':used_ingr}
 
 def random_comment(users, sandwiches, comments):
-    user = rand_selector(users)
+    user = rand_selector(users).profile
     sandwich = rand_selector(sandwiches) 
     comment = rand_selector(comments)
     return {'user':user, 'sandwich':sandwich, 'comment':comment}               
