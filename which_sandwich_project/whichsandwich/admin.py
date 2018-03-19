@@ -11,11 +11,14 @@ class ProfileInline(admin.StackedInline):
 class UserAdmin(BaseUserAdmin):
     inlines = (ProfileInline, )
 
+class SandwichAdmin(admin.ModelAdmin):
+    readonly_fields = ('created_date', )
+
 # Register your models here.
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
-admin.site.register(Sandwich)
+admin.site.register(Sandwich, SandwichAdmin)
 admin.site.register(Comment)
 admin.site.register(Ingredient)

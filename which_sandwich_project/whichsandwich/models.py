@@ -28,6 +28,7 @@ class Sandwich(models.Model):
     likes = models.PositiveIntegerField(blank=True, default=0)
     dislikes = models.PositiveIntegerField(blank=True, default=0)
     slug = models.SlugField(unique=True)
+    created_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
