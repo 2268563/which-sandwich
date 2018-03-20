@@ -24,13 +24,17 @@ def browse(request):
     
     try:
         # If we can't, the .get() method raises a DoesNotExist exception.
-        sandwiches = Sandwich.objects.get()
-        context_dict['Sandwiches'] = sandwiches
-    except Category.DoesNotExist:
-        context_dict['Sandwiches'] = None
+        sandwiches = Sandwich.objects.all()
+        context_dict['sandwiches'] = sandwiches
+    except Sandwich.DoesNotExist:
+        context_dict['wandwiches'] = None
         
     response = render(request, 'whichsandwich/browse.html', context = context_dict)
     return response
+
+def show_sandwich(request, sandwich_slug):
+    # Placeholder - returns index for now
+    return render(request, 'whichsandwich/index.html')
     
 def top(request):
     top_sandwiches = Sandwich.objects.order_by('-likes')
@@ -168,17 +172,20 @@ def my_account(request):
         
     response = render(request, 'whichsandwich/my_account.html', context = context_dict)
     return response
-'''
+
 @login_required
 def my_sandwiches(request):
     creators = Sandwich.objects.get('creator')
     users = Profile.objects.get('user')
     my_sandwiches = []
-    for user in users:
-        for creator in creators:
-            if user == creators:
-                my_sandwiches = my_sandwiches + 
-'''
+#    for user in users:
+#        for creator in creators:
+#            if user == creators:
+#                my_sandwiches = my_sandwiches + 
+
+    # Placeholder - returns index for now
+    return render(request, 'whichsandwich/index.html')
+
 @login_required
 def my_favourites(request):
     
@@ -193,14 +200,18 @@ def my_favourites(request):
         
     response = render(request, 'whichsandwich/my_favourites.html', context = context_dict)
     return response
-'''
+
 @login_required
 def create_sandwich(request):
-    
 # Need Sandwich Forms
+    # Placeholder - returns index for now
+    return render(request, 'whichsandwich/index.html')
+
 def about(request):
 # Need about template?
-'''
+    # Placeholder - returns index for now
+    return render(request, 'whichsandwich/index.html')
+
 # This will be used for all restricted views.
 @login_required
 def restricted(request):

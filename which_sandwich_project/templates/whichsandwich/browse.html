@@ -12,7 +12,7 @@ Browse
   {% if sandwiches %}
   <ul>
     {% for sandwich in sandwiches %}
-    <li><a href="{% url 'show_sandwich' sandwich.url %}">{{ sandwich.title }}</a></li>
+    <li><a href="{% url 'show_sandwich' sandwich.slug %}">{{ sandwich.name }}</a></li>
     <li>{{ sandwich.image }}</li>
     <li>Created by {{ sandwich.creator }}</li>
     <li>{{ sandwich.likes }} likes</li>
