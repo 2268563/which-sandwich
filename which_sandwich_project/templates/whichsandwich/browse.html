@@ -3,25 +3,25 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	Browse
+Browse
 {% endblock %}
 
 {% block body_block %}
 
-	<div>
-    {% if sandwiches %}
-	<ul>
-		{% for sandwich in sandwiches %}
-		<li><a href="{% 'show_sandwich' sandwich.url %}">{{ sandwich.title }}</a></li>
-		<li>{{ sandwich.image }}</li>
-		<li>Created by {{ sandwich.creator }}</li>
-		<li>{{ sandwich.likes }} likes</li>
-		<li>{{ sandwich.dislikes }} dislikes</li>
-		{% endfor %}
-	</ul>
-	{% else %}
-		<p>There are no sandwiches.</p><br>
-	{% endif %}
-    </div>
-		
+<div>
+  {% if sandwiches %}
+  <ul>
+    {% for sandwich in sandwiches %}
+    <li><a href="{% url 'show_sandwich' sandwich.url %}">{{ sandwich.title }}</a></li>
+    <li>{{ sandwich.image }}</li>
+    <li>Created by {{ sandwich.creator }}</li>
+    <li>{{ sandwich.likes }} likes</li>
+    <li>{{ sandwich.dislikes }} dislikes</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>There are no sandwiches.</p><br>
+  {% endif %}
+</div>
+
 {% endblock %}
