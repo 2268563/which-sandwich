@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% extends 'whichsandwich/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	{{ sandwich.name }}
+{% endblock %}
+
+{% block body_block %}
+	<div>
+	{%  if sandwich %}
+		<h1>{{ sandwich.name }}</h1>
+		<ul>
+			<li>{{ sandwich.image }}</li>
+			<li>Created by {{ sandwich.creator }}</li>
+			<li>{{ sandwich.likes }} likes</li>
+			<li>{{ sandwich.dislikes }} dislikes</li>
+		</ul>		
+	{% else %}
+		The specified sandwich does not exist!
+		{% if user.is_authenticated %}
+			<p>Why not <a href ="{% url 'create_sandwich' %}">create</a> it?</p>
+	{% endif %}
+	</div>
+	
+	<div>
+	<!-- Add a comment -->
+	</div>
+	
+	<div>
+	{% if comments %}
+		<ul>
+		{% for comment in comments %}
+			<li>Submitted by {{ comment.user }}<li>
+			<li>{{ comment.comment }}
+		{% endfor %}	
+	{% else %}
+		There are no comments on this sandwich!
+	{% endif %}
+	
+{% endblock %}
