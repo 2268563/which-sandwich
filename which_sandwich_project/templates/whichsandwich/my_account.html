@@ -9,13 +9,13 @@ My Account
 {% block body_block %}
 
 <div>
-  {% if best_received %}
+  {% if best_sandwiches %}
   <h2>My Best Received Sandwiches</h2>
   <ul>
-    {% for best_received_sandwich in best_received %}
-    <li><a href="{% url 'show_sandwich' best_received_sandwich.url %}">{{ best_recieved_sandwich.title }}</a></li>
-    <li>{{ best_received_sandwich.image }}</li>
-    <li>{{ best_received_sandwich.likes }} Likes</li>
+    {% for sandwich in best_sandwiches %}
+    <li><a href="{% url 'show_sandwich' sandwich.slug %}">{{ sandwich.name }}</a></li>
+    <li>{{ sandwich.likes }} Likes</li>
+    <li>{{ sandwich.dislikes }}</li>
     {% endfor %}
   </ul>
   {% else %}
@@ -29,7 +29,7 @@ My Account
   <ul>
     {% for sandwich in top_favourites %}
     <li><a href="{% url 'create_sandwich' sandwich.url %}">{{ sandwich.title }}</a></li>
-    <li>{{ best_received_sandwich.image }}</li>
+    <li>{{ sandwich.image }}</li>
     {% endfor %}
   </ul>
   {% else %}

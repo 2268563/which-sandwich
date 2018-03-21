@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from whichsandwich.models import Profile, Sandwich, Ingredient, Comment
+from whichsandwich.models import User, Sandwich, Ingredient, Comment
 from whichsandwich.forms import UserForm, UserProfileForm, SandwichForm
 from django.urls import reverse
 
@@ -40,7 +40,7 @@ def top(request):
     top_sandwiches = Sandwich.objects.order_by('-likes')
     
     context_dict = {'Top Sandwiches': top_sandwiches}
-    #response = render(request, 'whichsandwich/browse.html', context = context_dict}
+    response = render(request, 'whichsandwich/browse.html', context = context_dict)
     return response
 
 def new(request):
@@ -53,9 +53,18 @@ def new(request):
 
 def controversial(request):
 
-    controversial_sandwiches = Sandwich.objects.order_by(abs('likes'-'dislikes'))
+    likes = Sandwich.objects.get('likes')
+    dislikes = Sandwich.objects.get('dislikes')
+
+    #After a set number of likes & dislikes, a sandwich becomes controversial
+    #We then order them starting with those with the closest number of likes & dislikes
+    if likes>=5 and dislikes>=5:
+        controversial_sandwiches = Sandwich.objects.order_by(abs('likes'-'dislikes'))
     
-    context_dict = {'Controversial_sandwiches': controversial_sandwiches}
+        context_dict = {'Controversial_sandwiches': controversial_sandwiches}
+
+    else:
+        context_dict = {'Controversial_sandwiches': None}
     response = render(request, 'whichsandwich/browse.html', context = context_dict)
     return response
 
@@ -155,18 +164,19 @@ def sign_out(request):
 
 @login_required
 def my_account(request):
-    
-    user = Profile.objects.get('user')
-    context_dict['User'] = user
-        
-    response = render(request, 'whichsandwich/my_account.html', context = context_dict)
-    return response
+    best_sandwiches = Sandwich.objects.filter(creator=request.user).order_by('-likes', 'dislikes')
+
+    context_dict = {
+            'best_sandwiches': best_sandwiches,
+            }
+
+    return render(request, 'whichsandwich/my_account.html', context = context_dict)
 
 @login_required
 def my_sandwiches(request):
-    creators = Sandwich.objects.get('creator')
-    users = Profile.objects.get('user')
-    my_sandwiches = []
+#    creators = Sandwich.objects.get('creator')
+#    users = User.objects.get('user')
+    my_sandwiches = Sandwich.objects.filter(username = creator)
 #    for user in users:
 #        for creator in creators:
 #            if user == creators:
@@ -182,9 +192,9 @@ def my_favourites(request):
     
     try:
         # If we can't, the .get() method raises a DoesNotExist exception.
-        favourites = Profile.objects.get('favourites')
+        favourites = User.objects.get('favourites')
         context_dict['My Favourites'] = favourites
-    except Category.DoesNotExist:
+    except User.DoesNotExist:
         context_dict['My Favourites'] = None
         
     response = render(request, 'whichsandwich/my_favourites.html', context = context_dict)
@@ -211,9 +221,9 @@ def create_sandwich(request):
     return render(request, 'whichsandwich/create_sandwich.html', {'form':form})
 
 def about(request):
-# Need about template?
-    # Placeholder - returns index for now
-    return render(request, 'whichsandwich/index.html')
+
+    #No need for context_dict if we do not show user's number of visits.
+    return render(request, 'whichsandwich/about.html')
 
 # This will be used for all restricted views.
 @login_required
