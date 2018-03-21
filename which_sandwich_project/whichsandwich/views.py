@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from whichsandwich.models import Profile, Sandwich, Ingredient, Comment
-from whichsandwich.forms import UserForm, UserProfileForm, SandwichForm
+from whichsandwich.forms import UserForm, UserProfileForm, SandwichForm, CommentForm
 from django.urls import reverse
 
 

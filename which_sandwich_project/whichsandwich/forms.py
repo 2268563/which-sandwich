@@ -17,3 +17,8 @@ class SandwichForm(forms.ModelForm):
     class Meta:
         model = Sandwich
         fields = ('name', 'image', 'ingredients')
+		
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('comment')
