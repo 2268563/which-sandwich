@@ -16,4 +16,4 @@ class UserProfileForm(forms.ModelForm):
 class SandwichForm(forms.ModelForm):
     class Meta:
         model = Sandwich
-        fields = ['name', 'image', 'ingredients']
+        fields = ('name', 'image', 'ingredients')
