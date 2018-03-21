@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from whichsandwich.models import User, Sandwich, Ingredient, Comment
+from whichsandwich.models import Profile, Sandwich, Ingredient, Comment
 from whichsandwich.forms import UserForm, UserProfileForm, SandwichForm
 from django.urls import reverse
 
@@ -52,7 +52,6 @@ def new(request):
     return response
 
 def controversial(request):
-
     likes = Sandwich.objects.get('likes')
     dislikes = Sandwich.objects.get('dislikes')
 
@@ -176,7 +175,7 @@ def sign_out(request):
 @login_required
 def my_account(request):
     
-    user = User.objects.get('user')
+    user = Profile.objects.get('user')
     context_dict['User'] = user
         
     response = render(request, 'whichsandwich/my_account.html', context = context_dict)
@@ -185,7 +184,7 @@ def my_account(request):
 @login_required
 def my_sandwiches(request):
     creators = Sandwich.objects.get('creator')
-    users = User.objects.get('user')
+    users = Profile.objects.get('user')
     my_sandwiches = []
 #    for user in users:
 #        for creator in creators:
@@ -202,7 +201,7 @@ def my_favourites(request):
     
     try:
         # If we can't, the .get() method raises a DoesNotExist exception.
-        favourites = User.objects.get('favourites')
+        favourites = Profile.objects.get('favourites')
         context_dict['My Favourites'] = favourites
     except Category.DoesNotExist:
         context_dict['My Favourites'] = None

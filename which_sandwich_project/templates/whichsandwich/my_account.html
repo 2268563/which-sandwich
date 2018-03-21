@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% extends 'whichsandwich/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+My Account
+{% endblock %}
+
+{% block body_block %}
+
+<div>
+  {% if best_received %}
+  <h2>My Best Received Sandwiches</h2>
+  <ul>
+    {% for best_received_sandwich in best_received %}
+    <li><a href="{% url 'show_sandwich' best_received_sandwich.url %}">{{ best_recieved_sandwich.title }}</a></li>
+    <li>{{ best_received_sandwich.image }}</li>
+    <li>{{ best_received_sandwich.likes }} Likes</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <strong>You have no rated sandwiches.</strong>
+  {% endif %}
+</div>
+
+<div>
+  {% if top_favourites %}
+  <h2>My Top Five Favourites</h2>
+  <ul>
+    {% for sandwich in top_favourites %}
+    <li><a href="{% url 'create_sandwich' sandwich.url %}">{{ sandwich.title }}</a></li>
+    <li>{{ best_received_sandwich.image }}</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <strong>You have no favourites.</strong>
+  {% endif %}
+</div>
+
+{% endblock %}
