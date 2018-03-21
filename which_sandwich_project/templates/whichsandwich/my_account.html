@@ -29,7 +29,7 @@ My Account
   <ul>
     {% for sandwich in top_favourites %}
     <li><a href="{% url 'create_sandwich' sandwich.url %}">{{ sandwich.title }}</a></li>
-    <li>{{ best_received_sandwich.image }}</li>
+    <li>{{ sandwich.image }}</li>
     {% endfor %}
   </ul>
   {% else %}
