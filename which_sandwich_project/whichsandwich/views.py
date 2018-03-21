@@ -11,7 +11,6 @@ def index(request):
     #http://127.0.0.1:8000/whichsandwich/
 
     top_sandwiches = Sandwich.objects.order_by('-likes')[:5]
-    print(top_sandwiches)
 
     context_dict = {'top_sandwiches': top_sandwiches}
 
