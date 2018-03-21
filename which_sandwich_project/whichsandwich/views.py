@@ -1,20 +1,3 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Marketplace
-Explore
- @2260469s
-Sign out
-1
-0 0 2268563/which-sandwich
- Code  Issues 4  Pull requests 0  Projects 1  Wiki  Insights
-which-sandwich/which_sandwich_project/whichsandwich/views.py
-b65dc79  15 minutes ago
- Quentin Deligny Minor updates to views
-     
-243 lines (185 sloc)  8.31 KB
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
@@ -257,16 +240,3 @@ def about(request):
 @login_required
 def restricted(request):
      return render(request, 'rango/restricted.html', {})
-© 2018 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-API
-Training
-Shop
-Blog
-About
-Press h to open a hovercard with more details.
