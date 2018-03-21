@@ -185,9 +185,11 @@ def my_account(request):
 
 @login_required
 def my_sandwiches(request):
+
 #    creators = Sandwich.objects.get('creator')
 #    users = User.objects.get('user')
     my_sandwiches = Sandwich.objects.filter(username = creator)
+
 #    for user in users:
 #        for creator in creators:
 #            if user == creators:
@@ -233,7 +235,6 @@ def create_sandwich(request):
 
 def about(request):
 
-    #No need for context_dict if we do not show user's number of visits.
     return render(request, 'whichsandwich/about.html')
 
 # This will be used for all restricted views.
