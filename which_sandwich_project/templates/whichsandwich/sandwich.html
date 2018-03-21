@@ -16,6 +16,8 @@
 			<li>{{ sandwich.likes }} likes</li>
 			<li>{{ sandwich.dislikes }} dislikes</li>
 		</ul>		
+		<div class="like"><img src="{% static "images\like.png" %}" alt=Like" /></div>
+		<div class="dislike"><img src="{% static "images\dislike.jpg" %}" alt=Dislike" /></div>
 	{% else %}
 		The specified sandwich does not exist!
 		{% if user.is_authenticated %}
