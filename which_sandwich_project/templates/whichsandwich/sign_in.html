@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% extends 'whichsandwich/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+Sign In
+{% endblock %}
+
+{% block body_block %}
+<h1>Sign In to Which Sandwich</h1>
+<form id="login_form" method="post" action="{% url 'sign_in' %}">
+  {% csrf_token %}
+  Username: <input type="text" name="username" value="" size="50" />
+  <br />
+  Password: <input type="password" name="password" value="" size="50" />
+  <br />
+  <input type="submit" value="submit" />
+</form>
+{% endblock %}	

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% extends 'whichsandwich/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+My Sandwiches
+{% endblock %}
+
+{% block body_block %}
+
+<div>
+  {% if my_sandwiches %}
+  <h2>My Sandwiches</h2>
+  <ul>
+    {% for sandwich in my_sandwiches %}
+    <li><a href="{% url 'show_sandwich' sandwich.url %}">{{ sandwich.title }}</a></li>
+    <li>{{ sandwich.image }}</li>
+    <li>{{ sandwich.likes }} likes</li>
+    <li>{{ sandwich.dislikes }} dislikes</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <strong>You have no sandwiches.</strong><br/>
+  <p>Create one <a href="{% url 'create_sandwich' %}">here.</a> 
+  {% endif %}
+</div>
+
+{% endblock %}

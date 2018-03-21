@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from whichsandwich.models import User, Sandwich, Ingredient, Comment
+from whichsandwich.models import Profile, Sandwich, Ingredient, Comment
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -10,7 +10,7 @@ class UserForm(forms.ModelForm):
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
-        model = User
+        model = Profile
         fields = ('user', 'favourites')
 
 class SandwichForm(forms.ModelForm):
