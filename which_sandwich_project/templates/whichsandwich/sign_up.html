@@ -9,7 +9,7 @@ Sign Up
 {% block body_block %}
 {% if registered %}
 <p>You are already signed in</p><br>
-<a href="{% url 'home' %}">Return to the homepage.</a><br />
+<a href="{% url 'index' %}">Return to the homepage.</a><br />
 {% else %}
 <p>Sign Up to Which Sandwich!</p>
 <form id="user_form" method="post" action="{% url 'sign_up' %}" enctype="multipart/form-data">
