@@ -2,7 +2,7 @@ from django.conf.urls import url
 from whichsandwich import views
 
 urlpatterns = [
-    url(r'^$', views.home, name='home'),
+    url(r'^$', views.index, name='index'),
     url(r'^about/$', views.about, name='about'),
     url(r'^sign_up/$', views.sign_up, name='sign_up'),
     url(r'^sign_in/$', views.sign_in, name='sign_in'),

@@ -4,10 +4,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from whichsandwich.models import Profile, Sandwich, Ingredient, Comment
 from whichsandwich.forms import UserForm, UserProfileForm
-#from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 
-def home(request):
+def index(request):
     #http://127.0.0.1:8000/whichsandwich/
 
     top_sandwiches = Sandwich.objects.order_by('-likes')[:5]
