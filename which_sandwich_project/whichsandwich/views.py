@@ -2,23 +2,75 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from whichsandwich.models import User, Sandwich, Ingredient, Comment
-from django.core.urlresolvers import reverse
+from whichsandwich.models import Profile, Sandwich, Ingredient, Comment
+from whichsandwich.forms import UserForm, UserProfileForm
+#from django.core.urlresolvers import reverse
 
 
 def home(request):
     #http://127.0.0.1:8000/whichsandwich/
-    return HttpResponse("Welcome to the home page!")
+
+    top_sandwiches = Sandwich.objects.order_by('-likes')[:5]
+
+    context_dict = {'Top Sandwiches': top_sandwiches}
+
+    response = render(request, 'whichsandwich/index.html', context = context_dict)
+    return response
+
+    #How do we define sandwich of the day
 
 def browse(request):
+    context_dict = {}
+    
+    try:
+        # If we can't, the .get() method raises a DoesNotExist exception.
+        sandwiches = Sandwich.objects.all()
+        context_dict['sandwiches'] = sandwiches
+    except Sandwich.DoesNotExist:
+        context_dict['wandwiches'] = None
+        
+    response = render(request, 'whichsandwich/browse.html', context = context_dict)
+    return response
 
+def show_sandwich(request, sandwich_slug):
+    # Placeholder - returns index for now
+    return render(request, 'whichsandwich/index.html')
+    
 def top(request):
+    top_sandwiches = Sandwich.objects.order_by('-likes')
+    
+    context_dict = {'Top Sandwiches': top_sandwiches}
+    #response = render(request, 'whichsandwich/browse.html', context = context_dict}
+    return response
 
 def new(request):
 
+    new_sandwiches = Sandwich.objects.order_by('created_date')
+    
+    context_dict = {'New Sandwiches': new_sandwiches}
+    response = render(request, 'whichsandwich/browse.html', context = context_dict)
+    return response
+
 def controversial(request):
 
+    controversial_sandwiches = Sandwich.objects.order_by(abs('likes'-'dislikes'))
+    
+    context_dict = {'Controversial_sandwiches': controversial_sandwiches}
+    response = render(request, 'whichsandwich/browse.html', context = context_dict)
+    return response
+
 def sandwich_name(request):
+    
+    context_dict = {}
+    try:
+        # If we can't, the .get() method raises a DoesNotExist exception.
+        names = Sandwich.objects.get('name')
+        context_dict['Sandwich Names'] = names
+    except Category.DoesNotExist:
+        context_dict['Sandwich Names'] = None
+        
+    response = render(request, 'whichsandwich/browse.html', context = context_dict)
+    return response
 
 
 def sign_up(request):
@@ -29,9 +81,57 @@ def sign_up(request):
     registered = False
 
     # If it's a HTTP POST, we're interested in processing form data.
-    #if request.method == 'POST':
-
-    #need to set up forms to go further.
+    if request.method == 'POST':
+        # Attempt to grab information from the raw form information.
+        # Note that we make use of both UserForm and UserProfileForm.
+        user_form = UserForm(data=request.POST)
+        profile_form = UserProfileForm(data=request.POST)
+        
+        # If the two forms are valid...
+        if user_form.is_valid() and profile_form.is_valid():
+            # Save the user's form data to the database.
+            user = user_form.save()
+            
+            # Now we hash the password with the set_password method.
+            # Once hashed, we can update the user object.
+            user.set_password(user.password)
+            user.save()
+            
+            # Now sort out the UserProfile instance.
+            # Since we need to set the user attribute ourselves,
+            # we set commit=False. This delays saving the model
+            # until we're ready to avoid integrity problems.
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            
+            # Did the user provide a profile picture?
+            # If so, we need to get it from the input form and
+            #put it in the UserProfile model.
+            if 'picture' in request.FILES:
+                profile.picture = request.FILES['picture']
+                
+            # Now we save the UserProfile model instance.
+            profile.save()
+            
+            # Update our variable to indicate that the template
+            # registration was successful.
+            registered = True
+        else:
+            # Invalid form or forms - mistakes or something else?
+            # Print problems to the terminal.
+            print(user_form.errors, profile_form.errors)
+    else:
+        # Not a HTTP POST, so we render our form using two ModelForm instances.
+        # These forms will be blank, ready for user input.
+        user_form = UserForm()
+        profile_form = UserProfileForm()
+        
+    # Render the template depending on the context.
+    return render(request,
+                  'whichsandwich/sign_up.html',
+                  {'user_form': user_form,
+                   'profile_form': profile_form,
+                   'registered': registered})
 
 def sign_in(request):
 
@@ -66,19 +166,51 @@ def sign_out(request):
 
 @login_required
 def my_account(request):
+    
+    user = Profile.objects.get('user')
+    context_dict['User'] = user
+        
+    response = render(request, 'whichsandwich/my_account.html', context = context_dict)
+    return response
 
 @login_required
 def my_sandwiches(request):
+    creators = Sandwich.objects.get('creator')
+    users = Profile.objects.get('user')
+    my_sandwiches = []
+#    for user in users:
+#        for creator in creators:
+#            if user == creators:
+#                my_sandwiches = my_sandwiches + 
+
+    # Placeholder - returns index for now
+    return render(request, 'whichsandwich/index.html')
 
 @login_required
 def my_favourites(request):
     
+    context_dict = {}
+    
+    try:
+        # If we can't, the .get() method raises a DoesNotExist exception.
+        favourites = Profile.objects.get('favourites')
+        context_dict['My Favourites'] = favourites
+    except Category.DoesNotExist:
+        context_dict['My Favourites'] = None
+        
+    response = render(request, 'whichsandwich/my_favourites.html', context = context_dict)
+    return response
 
 @login_required
 def create_sandwich(request):
-    
+# Need Sandwich Forms
+    # Placeholder - returns index for now
+    return render(request, 'whichsandwich/index.html')
 
 def about(request):
+# Need about template?
+    # Placeholder - returns index for now
+    return render(request, 'whichsandwich/index.html')
 
 # This will be used for all restricted views.
 @login_required

@@ -3,39 +3,39 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	Home
+Home
 {% endblock %}
 
 {% block body_block %}
 
-	<div>
-    {% if sandwich_of_the_day %}
-	<h2>Sandwich of the day</h2>
-	<ul>
-		<li><a href="{% 'show_sandwich' sandwich_of_the_day.url %}">{{ sandwich_of_the_day.title }}</a></li>
-		<li>{{ sandwich_of_the_day.image }}</li>
-		<li>Created by {{ sandwich_of_the_day.creator }}</li>
-		<li>{{ sandwich_of_the_day.likes }} likes</li>
-		<li>{{ sandwich_of_the_day.dislikes }} dislikes</li>
-	</ul>
-	{% else %}
-		<strong>There are no categories present.</strong>
-	{% endif %}
-    </div>
-	
-	<div>
-	{% if top_sandwiches %}
-	<h2>Top Sandwiches</h2>
-	<ul>
-		{% for sandwich in top_sandwiches %}
-		<li>
-		<a href="{% 'show_sandwich' sandwich.url %}">{{ sandwich.title }}</a>
-		</li>
-		{% endfor %}
-	</ul>
-	{% else %}
-		<strong>There are no sandwiches present.</strong>
-	{% endif %}
-    </div>
-		
+<div>
+  {% if sandwich_of_the_day %}
+  <h2>Sandwich of the day</h2>
+  <ul>
+    <li><a href="{% url 'show_sandwich' sandwich_of_the_day.url %}">{{ sandwich_of_the_day.title }}</a></li>
+    <li>{{ sandwich_of_the_day.image }}</li>
+    <li>Created by {{ sandwich_of_the_day.creator }}</li>
+    <li>{{ sandwich_of_the_day.likes }} likes</li>
+    <li>{{ sandwich_of_the_day.dislikes }} dislikes</li>
+  </ul>
+  {% else %}
+  <strong>There are no categories present.</strong>
+  {% endif %}
+</div>
+
+<div>
+  {% if top_sandwiches %}
+  <h2>Top Sandwiches</h2>
+  <ul>
+    {% for sandwich in top_sandwiches %}
+    <li>
+      <a href="{% url 'show_sandwich' sandwich.url %}">{{ sandwich.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <strong>There are no sandwiches present.</strong>
+  {% endif %}
+</div>
+
 {% endblock %}
