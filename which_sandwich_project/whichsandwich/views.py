@@ -231,9 +231,8 @@ def create_sandwich(request):
     return render(request, 'whichsandwich/create_sandwich.html', {'form':form})
 
 def about(request):
-    # Need about template?
-    # Placeholder - returns index for now
-    return render(request, 'whichsandwich/index.html')
+
+    return render(request, 'whichsandwich/about.html')
 
 # This will be used for all restricted views.
 @login_required
