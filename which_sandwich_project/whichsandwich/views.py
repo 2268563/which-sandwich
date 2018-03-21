@@ -3,16 +3,16 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from whichsandwich.models import Profile, Sandwich, Ingredient, Comment
-from whichsandwich.forms import UserForm, UserProfileForm
-#from django.core.urlresolvers import reverse
+from whichsandwich.forms import UserForm, UserProfileForm, SandwichForm
+from django.urls import reverse
 
 
-def home(request):
+def index(request):
     #http://127.0.0.1:8000/whichsandwich/
 
     top_sandwiches = Sandwich.objects.order_by('-likes')[:5]
 
-    context_dict = {'Top Sandwiches': top_sandwiches}
+    context_dict = {'top_sandwiches': top_sandwiches}
 
     response = render(request, 'whichsandwich/index.html', context = context_dict)
     return response
@@ -35,7 +35,7 @@ def browse(request):
 def show_sandwich(request, sandwich_slug):
     # Placeholder - returns index for now
     return render(request, 'whichsandwich/index.html')
-    
+
 def top(request):
     top_sandwiches = Sandwich.objects.order_by('-likes')
     
@@ -203,9 +203,23 @@ def my_favourites(request):
 
 @login_required
 def create_sandwich(request):
-# Need Sandwich Forms
-    # Placeholder - returns index for now
-    return render(request, 'whichsandwich/index.html')
+    creator = request.user
+    form = SandwichForm()
+
+    if request.method == 'POST':
+        form = SandwichForm(request.POST)
+
+        if form.is_valid():
+            sandwich = form.save(commit=False)
+            sandwich.creator = creator
+            sandwich.save()
+            sandwich.save
+            form.save_m2m()
+            return show_sandwich(request, sandwich.slug)
+        else:
+            print(form.errors)
+
+    return render(request, 'whichsandwich/create_sandwich.html', {'form':form})
 
 def about(request):
 # Need about template?

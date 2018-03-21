@@ -122,7 +122,7 @@ def add_comment(user, sandwich, comment):
     return c
 
 def random_sandwich(users, ingredients):
-    creator = users[random.randint(0, len(users)-1)].profile
+    creator = users[random.randint(0, len(users)-1)]
     used_ingr = rand_selection(ingredients, 1)
 
     # Sort ingredients to avoid duplicates. e.g. Cheese and Ham / Ham and Cheese

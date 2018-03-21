@@ -1,24 +1,18 @@
-<!DOCTYPE html>
-{% extends 'whichsandwich/create_sandwich.html' %}
+{% extends 'whichsandwich/base.html' %}
+{% load bootstrap4 %}
 {% load staticfiles %}
 
 {% block title_block %}
-	Create Sandwich
+Create a Sandwich
 {% endblock %}
 
 {% block body_block %}
-	<h2>Create a Sandwich</h2>
-	<div>
-    {% if ingredients % }
-	<h3>Choose your ingredients</h3>
-	<ul>
-		{% for ingredient in ingredients %}
-		<li>{{ ingredient.name }}</li>
-		<li>{{ ingredient.name }} calories</li>
-		{% endfor %}
-	</ul>
-	{% else %}
-		<strong>There are no available ingredients</strong><br>
-	{% endif %}
-    </div>
-{% endblock %}	
+<form id="sandwich_form" method="post" action="{% url 'create_sandwich' %}">
+  <h2>Create a Sandwich</h2>
+  {% csrf_token %}
+  {% bootstrap_form form show_label=false %}
+  <br/>
+  <button type="submit" name="submit">Create</button>
+</form>
+{% endblock %}
+
