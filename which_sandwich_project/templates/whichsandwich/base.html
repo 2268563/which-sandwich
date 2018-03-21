@@ -22,8 +22,8 @@
         <li><a href ="{% url 'sign_out' %}">Sign Out</a></li>
         <li><a href ="{% url 'my_account' %}">My Account</a></li>
         <li><a href ="{% url 'create_sandwich' %}">Create Sandwich</a></li>
-        <li><a href ="{% url 'my_account/my_favourites' %}">My Favourites</a></li>
-        <li><a href ="{% url 'my_account/my_sandwiches' %}">My Sandwiches</a></li>
+        <li><a href ="{% url 'my_favourites' %}">My Favourites</a></li>
+        <li><a href ="{% url 'my_sandwiches' %}">My Sandwiches</a></li>
         {% else %}
         <li><a href ="{% url 'sign_in' %}">Sign In</a></li>
         <li><a href ="{% url 'sign_up' %}">Sign Up</a></li>
