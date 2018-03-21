@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'whichsandwich',
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [

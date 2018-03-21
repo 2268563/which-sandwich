@@ -21,7 +21,7 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 class Sandwich(models.Model):
-    creator = models.ForeignKey(Profile, on_delete=models.PROTECT)
+    creator = models.ForeignKey(User, on_delete=models.PROTECT)
     name = models.CharField(max_length=256, unique=True)
     image = models.ImageField(blank=True)
     ingredients = models.ManyToManyField('Ingredient')

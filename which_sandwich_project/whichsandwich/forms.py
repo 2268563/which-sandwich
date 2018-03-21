@@ -7,9 +7,13 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password')
+
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('user', 'favourites')
 
-# May need to add forms for sandwiches (for adding)
+class SandwichForm(forms.ModelForm):
+    class Meta:
+        model = Sandwich
+        fields = ['name', 'image', 'ingredients']
