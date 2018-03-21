@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from whichsandwich.models import Profile, Sandwich, Ingredient, Comment
+from whichsandwich.models import User, Sandwich, Ingredient, Comment
 from whichsandwich.forms import UserForm, UserProfileForm, SandwichForm
 from django.urls import reverse
 
@@ -52,6 +52,7 @@ def new(request):
     return response
 
 def controversial(request):
+
     likes = Sandwich.objects.get('likes')
     dislikes = Sandwich.objects.get('dislikes')
 
@@ -175,17 +176,18 @@ def sign_out(request):
 @login_required
 def my_account(request):
     
-    user = Profile.objects.get('user')
-    context_dict['User'] = user
-        
+    
+    context_dict = {'User' : request.user}
+    
+    
     response = render(request, 'whichsandwich/my_account.html', context = context_dict)
     return response
 
 @login_required
 def my_sandwiches(request):
-    creators = Sandwich.objects.get('creator')
-    users = Profile.objects.get('user')
-    my_sandwiches = []
+#    creators = Sandwich.objects.get('creator')
+#    users = User.objects.get('user')
+    my_sandwiches = Sandwich.objects.filter(username = creator)
 #    for user in users:
 #        for creator in creators:
 #            if user == creators:
@@ -201,9 +203,9 @@ def my_favourites(request):
     
     try:
         # If we can't, the .get() method raises a DoesNotExist exception.
-        favourites = Profile.objects.get('favourites')
+        favourites = User.objects.get('favourites')
         context_dict['My Favourites'] = favourites
-    except Category.DoesNotExist:
+    except User.DoesNotExist:
         context_dict['My Favourites'] = None
         
     response = render(request, 'whichsandwich/my_favourites.html', context = context_dict)
@@ -231,6 +233,7 @@ def create_sandwich(request):
 
 def about(request):
 
+    #No need for context_dict if we do not show user's number of visits.
     return render(request, 'whichsandwich/about.html')
 
 # This will be used for all restricted views.
