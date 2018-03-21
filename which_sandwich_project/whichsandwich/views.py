@@ -175,9 +175,32 @@ def sign_out(request):
 
 @login_required
 def my_account(request):
+
+    #most_liked_sandwich = Sandwich.objects.order_by('-likes')[:1]
+    my_best_sandwiches = Sandwich.objects.order_by(likes)
+
+    max_best = 0
+    for value in my_best_sandwich:
+        if value > max_best:
+            max_best = value
+
+    most_liked_sandwich = Sandwich.objects.get(likes = max_best)
+
     
-    
-    context_dict = {'User' : request.user}
+    #current_max_like = 0
+    #for sandwich in Sandwich:
+
+        
+        #if sandwich.likes > current_max_like:
+            #current_max_like = sandwich.likes
+            #best_received_sandwich = sandwich
+
+
+    context_dict = {'best_received_sandwich.title' : most_liked_sandwich.name,
+                    'best_received_sandwich.image' : most_liked_sandwich.image,
+                    'best_received_sandwich.likes' : most_liked_sandwich.likes,
+                    'sandwich.title' : 'test title',
+                    'sandwich.image' : 'test image',}
     
     
     response = render(request, 'whichsandwich/my_account.html', context = context_dict)

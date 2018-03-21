@@ -13,7 +13,7 @@ My Account
   <h2>My Best Received Sandwiches</h2>
   <ul>
     {% for best_received_sandwich in best_received %}
-    <li><a href="{% url 'show_sandwich' best_received_sandwich.url %}">{{ best_recieved_sandwich.title }}</a></li>
+    <li><a href="{% url 'show_sandwich' best_received_sandwich.url %}">{{ best_received_sandwich.title }}</a></li>
     <li>{{ best_received_sandwich.image }}</li>
     <li>{{ best_received_sandwich.likes }} Likes</li>
     {% endfor %}
@@ -29,7 +29,7 @@ My Account
   <ul>
     {% for sandwich in top_favourites %}
     <li><a href="{% url 'create_sandwich' sandwich.url %}">{{ sandwich.title }}</a></li>
-    <li>{{ best_received_sandwich.image }}</li>
+    <li>{{ sandwich.image }}</li>
     {% endfor %}
   </ul>
   {% else %}
