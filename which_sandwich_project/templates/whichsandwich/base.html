@@ -41,10 +41,13 @@
               <a class="nav-link" href="{% url 'about'  %}">About</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" area-expanded="false" href="{% url 'browse'  %}">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" area-expanded="false" href="#!">
                 Browse
               </a>
               <ul class="dropdown-menu bg-dark">
+                <li>
+                  <a class="nav-link" href="{% url 'browse'  %}">Temp browse link</a>
+                </li>
                 <li>
                   <a class="nav-link" href="{% url 'top'  %}">Top</a>
                 </li>
@@ -59,7 +62,7 @@
 
             {% if user.is_authenticated %}
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" area-expanded="false" href="{% url 'my_account' %}">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" area-expanded="false" href="#!">
                 Account
               </a>
               <ul class="dropdown-menu bg-dark">
