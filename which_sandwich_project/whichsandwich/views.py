@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from whichsandwich.models import User, Sandwich, Ingredient, Comment
+from whichsandwich.models import Profile, Sandwich, Ingredient, Comment
 from whichsandwich.forms import UserForm, UserProfileForm, SandwichForm
 from django.urls import reverse
 
@@ -195,9 +195,9 @@ def my_favourites(request):
     
     try:
         # If we can't, the .get() method raises a DoesNotExist exception.
-        my_favourites = User.objects.filter(user = request.user)
+        my_favourites = Profile.objects.filter(user = request.user)
         context_dict['My Favourites'] = my_favourites
-    except User.DoesNotExist:
+    except Profile.DoesNotExist:
         context_dict['My Favourites'] = None
         
     response = render(request, 'whichsandwich/my_favourites.html', context = context_dict)
