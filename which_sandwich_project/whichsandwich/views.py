@@ -46,15 +46,15 @@ def show_sandwich(request, sandwich_slug):
 def top(request):
     top_sandwiches = Sandwich.objects.order_by('-likes')
     
-    context_dict = {'Top Sandwiches': top_sandwiches}
+    context_dict = {'sandwiches': top_sandwiches}
     response = render(request, 'whichsandwich/browse.html', context = context_dict)
     return response
 
 def new(request):
 
-    new_sandwiches = Sandwich.objects.order_by('created_date')
+    new_sandwiches = Sandwich.objects.order_by('-created_date')
     
-    context_dict = {'New Sandwiches': new_sandwiches}
+    context_dict = {'sandwiches': new_sandwiches}
     response = render(request, 'whichsandwich/browse.html', context = context_dict)
     return response
 
@@ -68,7 +68,7 @@ def controversial(request):
     if likes>=5 and dislikes>=5:
         controversial_sandwiches = Sandwich.objects.order_by(abs('likes'-'dislikes'))
     
-        context_dict = {'Controversial_sandwiches': controversial_sandwiches}
+        context_dict = {'sandwiches': controversial_sandwiches}
 
     else:
         context_dict = {'Controversial_sandwiches': None}

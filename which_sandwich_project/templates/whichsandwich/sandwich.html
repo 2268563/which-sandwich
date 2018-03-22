@@ -8,21 +8,40 @@
 {% block body_block %}
 <div>
   {% if sandwich %}
-  <h1>{{ sandwich.name }}</h1>
-  <ul>
-    <li>{{ sandwich.image }}</li>
-    <li>Created by {{ sandwich.creator }}</li>
-    {% if sandwich.likes == 1 %}
-		<li>{{ sandwich.likes }} Like</li>
-	{% else %}
-		<li>{{ sandwich.likes }} Likes</li>
-	{% endif %}
-	{% if sandwich.dislikes == 1 %}
-		<li>{{ sandwich.dislikes }} Dislike</li>
-	{% else %}
-		<li>{{ sandwich.dislikes }} Dislikes</li>
-	{% endif %}
-  </ul>		
+  <h1 class="my-4">{{ sandwich.name }}
+	<small>Sandwich</small>
+  </h1>
+  
+  <div class="row">
+     
+    <div class="cold-md-8">
+	  <div class="img-fluid">{{ sandwich.image }}</div>
+	</div>
+	 
+	<div class="col-md-8"> 
+      <h3 class="my-3">Ingredients</h3>
+	  <ul>
+	    {% for ingredient in Sandwich.ingredients %}
+	    <li>{{ ingredient.name }}</li>
+	    {% endfor %}
+	  </ul>
+	  <h3 class="my-3">Sandwich Details</h3>
+      <ul>
+        <li>Created by {{ sandwich.creator }}</li>
+        {% if sandwich.likes == 1 %}
+	      <li>{{ sandwich.likes }} Like</li>
+	    {% else %}
+	      <li>{{ sandwich.likes }} Likes</li>
+	    {% endif %}
+	    {% if sandwich.dislikes == 1 %}
+	      <li>{{ sandwich.dislikes }} Dislike</li>
+	    {% else %}
+	      <li>{{ sandwich.dislikes }} Dislikes</li>
+	    {% endif %}
+		<li>Created on {{ sandwich.created_date }}</li>
+      </ul>	
+	</div>
+  </div>
   
   <button class="like"><img src="{% static "images\like.png" %}" alt="Like" /></button>
   <button class="dislike"><img src="{% static "images\dislike.png" %}" alt="Dislike" /></button>
