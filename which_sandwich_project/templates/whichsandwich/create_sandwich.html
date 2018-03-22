@@ -7,7 +7,7 @@ Create a Sandwich
 {% endblock %}
 
 {% block body_block %}
-<form id="sandwich_form" method="post" action="{% url 'create_sandwich' %}">
+<form id="sandwich_form" enctype="multipart/form-data" method="post" action="{% url 'create_sandwich' %}">
   <h2>Create a Sandwich</h2>
   {% csrf_token %}
   {% bootstrap_form form show_label=false %}
