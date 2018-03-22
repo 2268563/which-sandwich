@@ -24,10 +24,10 @@
 	{% endif %}
   </ul>		
   
-  <div class="like"><img src="{% static "images\like.png" %}" alt="Like" /></div>
-  <div class="dislike"><img src="{% static "images\dislike.png" %}" alt="Dislike" /></div>
+  <button class="like"><img src="{% static "images\like.png" %}" alt="Like" /></button>
+  <button class="dislike"><img src="{% static "images\dislike.png" %}" alt="Dislike" /></button>
   {% if user.is_authenticated %}
-  <div class="favourite"><img src="{% static "images\favourite.png" %}" alt="Favourite" /></div>
+  <button class="favourite"><img src="{% static "images\favourite.png" %}" alt="Favourite" /></button>
   {% endif %}
   
   <div>
@@ -62,9 +62,9 @@
 
   {% else %}
   The specified sandwich does not exist!
-  {% endif %}
-  {% if user.is_authenticated %}
-  <p>Why not <a href ="{% url 'create_sandwich' %}">create</a> it?</p>
+	{% if user.is_authenticated %}
+	<p>Why not <a href ="{% url 'create_sandwich' %}">create</a> it?</p>
+	{% endif %}
   {% endif %}
 </div>
 
