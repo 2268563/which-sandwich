@@ -33,8 +33,15 @@ def browse(request):
     return response
 
 def show_sandwich(request, sandwich_slug):
-    # Placeholder - returns index for now
-    return render(request, 'whichsandwich/index.html')
+    context_dict = {}
+
+    try:
+        sandwich = Sandwich.objects.get(slug=sandwich_slug)
+        context_dict['sandwich'] = sandwich
+    except Sandwich.DoesNotExist:
+        context_dict['sandwich'] = None
+
+    return render(request, 'whichsandwich/sandwich.html', context_dict)
 
 def top(request):
     top_sandwiches = Sandwich.objects.order_by('-likes')

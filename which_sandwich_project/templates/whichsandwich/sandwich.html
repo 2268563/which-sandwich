@@ -1,56 +1,58 @@
-<!DOCTYPE html>
 {% extends 'whichsandwich/base.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
-	{{ sandwich.name }}
+{{ sandwich.name }}
 {% endblock %}
 
 {% block body_block %}
-	<div>
-	{%  if sandwich %}
-		<h1>{{ sandwich.name }}</h1>
-		<ul>
-			<li>{{ sandwich.image }}</li>
-			<li>Created by {{ sandwich.creator }}</li>
-			<li>{{ sandwich.likes }} likes</li>
-			<li>{{ sandwich.dislikes }} dislikes</li>
-		</ul>		
-		<div class="like"><img src="{% static "images\like.png" %}" alt=Like" /></div>
-		<div class="dislike"><img src="{% static "images\dislike.jpg" %}" alt=Dislike" /></div>
-	{% else %}
-		The specified sandwich does not exist!
-		{% if user.is_authenticated %}
-			<p>Why not <a href ="{% url 'create_sandwich' %}">create</a> it?</p>
-	{% endif %}
-	</div>
-	
-	<div>
-	<form id="comment_form" method="post" action="{% url 'show_sandwich' %}">
-		<h3>Comment on this sandwich</h3>
-		{% csrf_token %}
-		{% for hidden in form.hidden_fields %}
-			{{ hidden }} 
-		{% endfor %}
-		{% for field in form.visible_fields %}
-			{{ field.errors }}
-			{{ field.help_text }}
-			{{ field }}
-		{% endfor %}
-		<button type="submit" name="submit">Submit</button>
+<div>
+  {% if sandwich %}
+  <h1>{{ sandwich.name }}</h1>
+  <ul>
+    <li>{{ sandwich.image }}</li>
+    <li>Created by {{ sandwich.creator }}</li>
+    <li>{{ sandwich.likes }} likes</li>
+    <li>{{ sandwich.dislikes }} dislikes</li>
+  </ul>		
+  <div class="like"><img src="{% static "images\like.png" %}" alt="Like" /></div>
+  <div class="dislike"><img src="{% static "images\dislike.png" %}" alt="Dislike" /></div>
+  <div>
+    <form id="comment_form" method="post" action="{% url 'show_sandwich' sandwich.slug %}">
+      <h3>Comment on this sandwich</h3>
+      {% csrf_token %}
+      {% for hidden in form.hidden_fields %}
+      {{ hidden }} 
+      {% endfor %}
+      {% for field in form.visible_fields %}
+      {{ field.errors }}
+      {{ field.help_text }}
+      {{ field }}
+      {% endfor %}
+      <button type="submit" name="submit">Submit</button>
     </form>
-	</div>
-	
-	<div>
-	{% if comments %}
-		<ul>
-		{% for comment in comments %}
-			<li>Submitted by {{ comment.user }}</li>
-			<li>{{ comment.comment }}</li>
-			<br/>
-		{% endfor %}	
-	{% else %}
-		There are no comments on this sandwich!
-	{% endif %}
-	
+  </div>
+
+  <div>
+    {% if comments %}
+    <ul>
+      {% for comment in comments %}
+      <li>Submitted by {{ comment.user }}</li>
+      <li>{{ comment.comment }}</li>
+      <br/>
+      {% endfor %}	
+    </ul>
+    {% else %}
+    There are no comments on this sandwich!
+    {% endif %}
+  </div>
+
+  {% else %}
+  The specified sandwich does not exist!
+  {% endif %}
+  {% if user.is_authenticated %}
+  <p>Why not <a href ="{% url 'create_sandwich' %}">create</a> it?</p>
+  {% endif %}
+</div>
+
 {% endblock %}
