@@ -8,42 +8,56 @@ Home
 
 {% block body_block %}
 
-<div>
-  {% if sandwich_of_the_day %}
-  <h2>Sandwich of the day</h2>
-  <ul>
-    <li><a href="{% url 'show_sandwich' sandwich_of_the_day.url %}">{{ sandwich_of_the_day.title }}</a></li>
-    <li>{{ sandwich_of_the_day.image }}</li>
-    <li>Created by {{ sandwich_of_the_day.creator }}</li>
-    {% if sandwich.likes == 1 %}
-		<li>{{ sandwich.likes }} Like</li>
-	{% else %}
-		<li>{{ sandwich.likes }} Likes</li>
-	{% endif %}
-	{% if sandwich.dislikes == 1 %}
-		<li>{{ sandwich.dislikes }} Dislike</li>
-	{% else %}
-		<li>{{ sandwich.dislikes }} Dislikes</li>
-	{% endif %}
-  </ul>
-  {% else %}
-  <strong>There is no sandwich of the day.</strong>
-  {% endif %}
-</div>
+<!-- Page Content -->
+<div class="container">
 
-<div>
-  {% if top_sandwiches %}
-  <h2>Top Sandwiches</h2>
-  <ul>
+  <!-- Portfolio Item Heading -->
+  <h1 class="my-4">Sandwich of the Day
+  </h1>
+
+  <!-- Portfolio Item Row -->
+  <div class="row" height=400px>
+
+    <div class="col-md-6">
+      <a href="{% url 'show_sandwich' sotd.slug %}">
+      <img class="img-fluid img-thumbnail" src="{{ sotd.image.url }}" alt="Sandwich of the Day">
+      </a>
+    </div>
+
+    <div class="col-md-6">
+      <h3 class="my-3">Ingredients</h3>
+      <ul>
+        {% for ingredients in sotd.ingredients.all %}
+        <li>{{ ingredients.name }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+  </div>
+  <!-- /.row -->
+
+  <!-- Related Projects Row -->
+  <h3 class="my-4">More Sandwiches</h3>
+
+  <div class="row">
+
+    {% if top_sandwiches %}
+
     {% for sandwich in top_sandwiches %}
-    <li>
-      <a href="{% url 'show_sandwich' sandwich.slug %}">{{ sandwich.name }}</a>
-    </li>
+    <div class="col-md-3 col-sm-6 mb-4">
+      <a href="{% url 'show_sandwich' sandwich.slug %}">
+        <img class="img-fluid img-thumbnail" src="{{ sandwich.image.url }}" alt="">
+      </a>
+    </div>
     {% endfor %}
-  </ul>
-  {% else %}
-  <strong>There are no sandwiches present.</strong>
-  {% endif %}
-</div>
 
+    {% else %}
+    <strong>There are no sandwiches present.</strong>
+    {% endif %}
+
+  </div>
+  <!-- /.row -->
+
+</div>
+<!-- /.container -->
 {% endblock %}
