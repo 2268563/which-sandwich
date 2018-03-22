@@ -181,16 +181,12 @@ def my_account(request):
 
 @login_required
 def my_sandwiches(request):
-#    creators = Sandwich.objects.get('creator')
-#    users = User.objects.get('user')
-    my_sandwiches = Sandwich.objects.filter(username = creator)
-#    for user in users:
-#        for creator in creators:
-#            if user == creators:
-#                my_sandwiches = my_sandwiches + 
 
-    # Placeholder - returns index for now
-    return render(request, 'whichsandwich/index.html')
+    my_sandwiches = Sandwich.objects.filter(creator=request.user)
+
+    context_dict = {'my_sandwiches':my_sandwiches}
+
+    return render(request, 'whichsandwich/my_sandwiches.html',context = context_dict)
 
 @login_required
 def my_favourites(request):
@@ -199,7 +195,7 @@ def my_favourites(request):
     
     try:
         # If we can't, the .get() method raises a DoesNotExist exception.
-        favourites = User.objects.get('favourites')
+        my_favourites = User.objects.filter('user' = request.user)
         context_dict['My Favourites'] = favourites
     except User.DoesNotExist:
         context_dict['My Favourites'] = None
