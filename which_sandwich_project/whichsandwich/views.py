@@ -195,8 +195,8 @@ def my_favourites(request):
     
     try:
         # If we can't, the .get() method raises a DoesNotExist exception.
-        my_favourites = User.objects.filter('user' = request.user)
-        context_dict['My Favourites'] = favourites
+        my_favourites = User.objects.filter(user = request.user)
+        context_dict['My Favourites'] = my_favourites
     except User.DoesNotExist:
         context_dict['My Favourites'] = None
         
