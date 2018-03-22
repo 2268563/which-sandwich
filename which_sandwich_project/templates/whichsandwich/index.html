@@ -15,8 +15,16 @@ Home
     <li><a href="{% url 'show_sandwich' sandwich_of_the_day.url %}">{{ sandwich_of_the_day.title }}</a></li>
     <li>{{ sandwich_of_the_day.image }}</li>
     <li>Created by {{ sandwich_of_the_day.creator }}</li>
-    <li>{{ sandwich_of_the_day.likes }} likes</li>
-    <li>{{ sandwich_of_the_day.dislikes }} dislikes</li>
+    {% if sandwich.likes == 1 %}
+		<li>{{ sandwich.likes }} Like</li>
+	{% else %}
+		<li>{{ sandwich.likes }} Likes</li>
+	{% endif %}
+	{% if sandwich.dislikes == 1 %}
+		<li>{{ sandwich.dislikes }} Dislike</li>
+	{% else %}
+		<li>{{ sandwich.dislikes }} Dislikes</li>
+	{% endif %}
   </ul>
   {% else %}
   <strong>There is no sandwich of the day.</strong>

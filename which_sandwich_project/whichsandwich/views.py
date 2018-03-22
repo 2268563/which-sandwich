@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from whichsandwich.models import User, Sandwich, Ingredient, Comment
+from whichsandwich.models import Profile, Sandwich, Ingredient, Comment
 from whichsandwich.forms import UserForm, UserProfileForm, SandwichForm
 from django.urls import reverse
 
@@ -33,8 +33,15 @@ def browse(request):
     return response
 
 def show_sandwich(request, sandwich_slug):
-    # Placeholder - returns index for now
-    return render(request, 'whichsandwich/index.html')
+    context_dict = {}
+
+    try:
+        sandwich = Sandwich.objects.get(slug=sandwich_slug)
+        context_dict['sandwich'] = sandwich
+    except Sandwich.DoesNotExist:
+        context_dict['sandwich'] = None
+
+    return render(request, 'whichsandwich/sandwich.html', context_dict)
 
 def top(request):
     top_sandwiches = Sandwich.objects.order_by('-likes')
@@ -92,35 +99,26 @@ def sign_up(request):
     # If it's a HTTP POST, we're interested in processing form data.
     if request.method == 'POST':
         # Attempt to grab information from the raw form information.
-        # Note that we make use of both UserForm and UserProfileForm.
         user_form = UserForm(data=request.POST)
-        profile_form = UserProfileForm(data=request.POST)
         
         # If the two forms are valid...
-        if user_form.is_valid() and profile_form.is_valid():
-            # Save the user's form data to the database.
-            user = user_form.save()
+        if user_form.is_valid():
+            # Create the user instance
+            user = user_form.save(commit=False)
             
             # Now we hash the password with the set_password method.
-            # Once hashed, we can update the user object.
             user.set_password(user.password)
-            user.save()
             
-            # Now sort out the UserProfile instance.
-            # Since we need to set the user attribute ourselves,
-            # we set commit=False. This delays saving the model
-            # until we're ready to avoid integrity problems.
-            profile = profile_form.save(commit=False)
-            profile.user = user
+            # User profile is created automatically
             
             # Did the user provide a profile picture?
             # If so, we need to get it from the input form and
-            #put it in the UserProfile model.
+            # put it in the UserProfile model.
             if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
+                user.profile.picture = request.FILES['picture']
                 
             # Now we save the UserProfile model instance.
-            profile.save()
+            user.save()
             
             # Update our variable to indicate that the template
             # registration was successful.
@@ -128,18 +126,16 @@ def sign_up(request):
         else:
             # Invalid form or forms - mistakes or something else?
             # Print problems to the terminal.
-            print(user_form.errors, profile_form.errors)
+            print(user_form.errors)
     else:
         # Not a HTTP POST, so we render our form using two ModelForm instances.
         # These forms will be blank, ready for user input.
         user_form = UserForm()
-        profile_form = UserProfileForm()
         
     # Render the template depending on the context.
     return render(request,
                   'whichsandwich/sign_up.html',
                   {'user_form': user_form,
-                   'profile_form': profile_form,
                    'registered': registered})
 
 def sign_in(request):
@@ -185,16 +181,12 @@ def my_account(request):
 
 @login_required
 def my_sandwiches(request):
-#    creators = Sandwich.objects.get('creator')
-#    users = User.objects.get('user')
-    my_sandwiches = Sandwich.objects.filter(username = creator)
-#    for user in users:
-#        for creator in creators:
-#            if user == creators:
-#                my_sandwiches = my_sandwiches + 
 
-    # Placeholder - returns index for now
-    return render(request, 'whichsandwich/index.html')
+    my_sandwiches = Sandwich.objects.filter(creator=request.user)
+
+    context_dict = {'my_sandwiches':my_sandwiches}
+
+    return render(request, 'whichsandwich/my_sandwiches.html',context = context_dict)
 
 @login_required
 def my_favourites(request):
@@ -203,9 +195,9 @@ def my_favourites(request):
     
     try:
         # If we can't, the .get() method raises a DoesNotExist exception.
-        favourites = User.objects.get('favourites')
-        context_dict['My Favourites'] = favourites
-    except User.DoesNotExist:
+        my_favourites = Profile.objects.filter(user = request.user)
+        context_dict['My Favourites'] = my_favourites
+    except Profile.DoesNotExist:
         context_dict['My Favourites'] = None
         
     response = render(request, 'whichsandwich/my_favourites.html', context = context_dict)
@@ -223,7 +215,6 @@ def create_sandwich(request):
             sandwich = form.save(commit=False)
             sandwich.creator = creator
             sandwich.save()
-            sandwich.save
             form.save_m2m()
             return show_sandwich(request, sandwich.slug)
         else:
