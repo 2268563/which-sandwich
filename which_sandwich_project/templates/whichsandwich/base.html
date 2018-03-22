@@ -45,19 +45,27 @@
                 Browse
               </a>
               <ul class="dropdown-menu bg-dark">
+                <li>
                   <a class="nav-link" href="{% url 'top'  %}">Top</a>
+                </li>
+                <li>
                   <a class="nav-link" href="{% url 'new'  %}">New</a>
+                </li>
+                <li>
                   <a class="nav-link" href="{% url 'controversial'  %}">Controversial</a>
+                </li>
               </ul>
             </li>
 
             {% if user.is_authenticated %}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" area-expanded="false" href="{% url 'my_account' %}">
-                My Account
-                <span class="caret"></span>
+                Account
               </a>
               <ul class="dropdown-menu bg-dark">
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'my_account'  %}">My Account</a>
+                </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'my_favourites'  %}">My Favourites</a>
                 </li>
@@ -79,7 +87,6 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'sign_up'  %}">Sign Up</a>
             </li>
-
             {% endif %}
           </ul>
         </div>
