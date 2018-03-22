@@ -23,8 +23,13 @@
 		<li>{{ sandwich.dislikes }} Dislikes</li>
 	{% endif %}
   </ul>		
+  
   <div class="like"><img src="{% static "images\like.png" %}" alt="Like" /></div>
   <div class="dislike"><img src="{% static "images\dislike.png" %}" alt="Dislike" /></div>
+  {% if user.is_authenticated %}
+  <div class="favourite"><img src="{% static "images\favourite.png" %}" alt="Favourite" /></div>
+  {% endif %}
+  
   <div>
     <form id="comment_form" method="post" action="{% url 'show_sandwich' sandwich.slug %}">
       <h3>Comment on this sandwich</h3>
