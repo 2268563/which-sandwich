@@ -209,7 +209,7 @@ def create_sandwich(request):
     form = SandwichForm()
 
     if request.method == 'POST':
-        form = SandwichForm(request.POST)
+        form = SandwichForm(request.POST, request.FILES)
 
         if form.is_valid():
             sandwich = form.save(commit=False)
