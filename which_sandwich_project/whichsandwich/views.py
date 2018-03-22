@@ -212,7 +212,6 @@ def create_sandwich(request):
             sandwich = form.save(commit=False)
             sandwich.creator = creator
             sandwich.save()
-            sandwich.save
             form.save_m2m()
             return show_sandwich(request, sandwich.slug)
         else:
