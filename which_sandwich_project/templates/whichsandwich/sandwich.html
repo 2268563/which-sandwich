@@ -1,4 +1,5 @@
 {% extends 'whichsandwich/base.html' %}
+{% load bootstrap4 %}
 {% load staticfiles %}
 
 {% block title_block %}
@@ -8,45 +9,54 @@
 {% block body_block %}
 <div>
   {% if sandwich %}
-  <h1>{{ sandwich.name }}</h1>
-  <ul>
-    {% if sandwich.image %}
-    <img src="{{ sandwich.image.url }}" alt="" />
-    {% endif %}
-    <li>Created by {{ sandwich.creator }}</li>
-    {% if sandwich.likes == 1 %}
-    <li>{{ sandwich.likes }} Like</li>
-    {% else %}
-    <li>{{ sandwich.likes }} Likes</li>
-    {% endif %}
-    {% if sandwich.dislikes == 1 %}
-    <li>{{ sandwich.dislikes }} Dislike</li>
-    {% else %}
-    <li>{{ sandwich.dislikes }} Dislikes</li>
-    {% endif %}
-  </ul>		
+  <h1 class="my-4">{{ sandwich.name }}
+	<small>Sandwich</small>
+  </h1>
+  
+  <div class="row">
+     
+    <div class="cold-md-8">
+	  <div class="img-fluid">{{ sandwich.image }}</div>
+	</div>
+	 
+	<div class="col-md-8"> 
+      <h3 class="my-3">Ingredients</h3>
+	  <ul>
+	    {% for ingredient in sandwich.ingredients.all %}
+	    <li>{{ ingredient.name }} ({{ ingredient.calories }} Calories)</li>
+	    {% endfor %}
+	  </ul>
+	  
+	  <h3 class="my-3">Sandwich Details</h3>
+      <ul>
+        <li>Created by {{ sandwich.creator }}</li>
+        {% if sandwich.likes == 1 %}
+	      <li>{{ sandwich.likes }} Like</li>
+	    {% else %}
+	      <li>{{ sandwich.likes }} Likes</li>
+	    {% endif %}
+	    {% if sandwich.dislikes == 1 %}
+	      <li>{{ sandwich.dislikes }} Dislike</li>
+	    {% else %}
+	      <li>{{ sandwich.dislikes }} Dislikes</li>
+	    {% endif %}
+		<li>Created on {{ sandwich.created_date }}</li>
+      </ul>	
+	</div>
+  </div>
+  
   <button class="like"><img src="{% static "images\like.png" %}" alt="Like" /></button>
   <button class="dislike"><img src="{% static "images\dislike.png" %}" alt="Dislike" /></button>
   {% if user.is_authenticated %}
   <button class="favourite"><img src="{% static "images\favourite.png" %}" alt="Favourite" /></button>
   {% endif %}
-
+  
+  {% if user.is_authenticated %}
   <div>
-    <form id="comment_form" method="post" action="{% url 'show_sandwich' sandwich.slug %}">
-      <h3>Comment on this sandwich</h3>
-      {% csrf_token %}
-      {% for hidden in form.hidden_fields %}
-      {{ hidden }} 
-      {% endfor %}
-      {% for field in form.visible_fields %}
-      {{ field.errors }}
-      {{ field.help_text }}
-      {{ field }}
-      {% endfor %}
-      <button type="submit" name="submit">Submit</button>
-    </form>
+    <h4><a href ="{% url 'comment' sandwich.slug %}">Click here</a> to comment on this sandwich!</h4>
   </div>
-
+  {% endif %}
+  
   <div>
     {% if comments %}
     <ul>

@@ -1,0 +1,18 @@
+{% extends 'whichsandwich/base.html' %}
+{% load bootstrap4 %}
+{% load staticfiles %}
+
+{% block title_block %}
+Comment
+{% endblock %}
+
+{% block body_block %}
+<form id="sandwich_form" method="post" action="{% url 'comment' sandwich.slug %}">
+  <h2>New Comment</h2>
+  {% csrf_token %}
+  {% bootstrap_form form show_label=false %}
+  <br/>
+  <button type="submit" name="submit">Comment</button>
+</form>
+{% endblock %}
+
