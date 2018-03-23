@@ -9,12 +9,12 @@ My Favourites
 {% block body_block %}
 
 <div>
-  {% if my_favourites %}
+  {% if favourites %}
   <h2>My Favourites</h2>
   <ul>
-    {% for sandwich in my_favourites %}
-    <li><a href="{% url 'show_sandwich' sandwich.url %}">{{ sandwich.title }}</a></li>
-    <li>{{ sandwich.image }}</li>
+    {% for sandwich in favourites %}
+    <li><a href="{% url 'show_sandwich' sandwich.slug %}">{{ sandwich.name }}</a></li>
+    <img src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
     <li>Created by {{ sandwich.creator }}</li>
     {% if sandwich.likes == 1 %}
 		<li>{{ sandwich.likes }} Like</li>

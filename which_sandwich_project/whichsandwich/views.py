@@ -196,18 +196,11 @@ def my_sandwiches(request):
 
 @login_required
 def my_favourites(request):
-    
     context_dict = {}
-    
-    try:
-        # If we can't, the .get() method raises a DoesNotExist exception.
-        my_favourites = Profile.objects.filter(user = request.user)
-        context_dict['My Favourites'] = my_favourites
-    except Profile.DoesNotExist:
-        context_dict['My Favourites'] = None
-        
-    response = render(request, 'whichsandwich/my_favourites.html', context = context_dict)
-    return response
+    favourites = request.user.profile.favourites.all()
+    print(favourites)
+    context_dict['favourites'] = favourites
+    return render(request, 'whichsandwich/my_favourites.html', context=context_dict)
 
 @login_required
 def create_sandwich(request):
