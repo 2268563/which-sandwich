@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from whichsandwich.models import Profile, Sandwich, Ingredient, Comment
-from whichsandwich.forms import UserForm, UserProfileForm, SandwichForm
+from whichsandwich.forms import UserForm, UserProfileForm, SandwichForm, CommentForm
 from django.urls import reverse
 
 
@@ -38,8 +38,11 @@ def show_sandwich(request, sandwich_slug):
     try:
         sandwich = Sandwich.objects.get(slug=sandwich_slug)
         context_dict['sandwich'] = sandwich
+        comments = Comment.objects.filter(sandwich=sandwich)
+        context_dict['comments'] = comments
     except Sandwich.DoesNotExist:
         context_dict['sandwich'] = None
+        context_dict['comments'] = None
 
     return render(request, 'whichsandwich/sandwich.html', context_dict)
 
@@ -231,3 +234,25 @@ def about(request):
 @login_required
 def restricted(request):
      return render(request, 'rango/restricted.html', {})
+
+@login_required
+def comment(request, sandwich_slug):
+    creator = request.user
+    creator = Profile.objects.get(user=creator)
+    sandwich = Sandwich.objects.get(slug=sandwich_slug)
+    form = CommentForm()
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = creator
+            comment.sandwich = sandwich
+            comment.save()
+            form.save_m2m()
+            return show_sandwich(request, sandwich.slug)
+        else:
+            print(form.errors)
+
+    return render(request, 'whichsandwich/comment.html', {'form':form, 'sandwich':sandwich})

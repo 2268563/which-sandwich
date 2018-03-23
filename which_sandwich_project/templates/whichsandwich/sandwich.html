@@ -1,4 +1,5 @@
 {% extends 'whichsandwich/base.html' %}
+{% load bootstrap4 %}
 {% load staticfiles %}
 
 {% block title_block %}
@@ -22,9 +23,10 @@
       <h3 class="my-3">Ingredients</h3>
 	  <ul>
 	    {% for ingredient in sandwich.ingredients.all %}
-	    <li>{{ ingredient }}</li>
+	    <li>{{ ingredient.name }} ({{ ingredient.calories }} Calories)</li>
 	    {% endfor %}
 	  </ul>
+	  
 	  <h3 class="my-3">Sandwich Details</h3>
       <ul>
         <li>Created by {{ sandwich.creator }}</li>
@@ -49,22 +51,12 @@
   <button class="favourite"><img src="{% static "images\favourite.png" %}" alt="Favourite" /></button>
   {% endif %}
   
+  {% if user.is_authenticated %}
   <div>
-    <form id="comment_form" method="post" action="{% url 'show_sandwich' sandwich.slug %}">
-      <h3>Comment on this sandwich</h3>
-      {% csrf_token %}
-      {% for hidden in form.hidden_fields %}
-      {{ hidden }} 
-      {% endfor %}
-      {% for field in form.visible_fields %}
-      {{ field.errors }}
-      {{ field.help_text }}
-      {{ field }}
-      {% endfor %}
-      <button type="submit" name="submit">Submit</button>
-    </form>
+    <h4><a href ="{% url 'comment' sandwich.slug %}">Click here</a> to comment on this sandwich!</h4>
   </div>
-
+  {% endif %}
+  
   <div>
     {% if comments %}
     <ul>
