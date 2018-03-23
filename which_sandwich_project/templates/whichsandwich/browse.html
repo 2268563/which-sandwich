@@ -13,7 +13,7 @@ Browse
   <ul>
     {% for sandwich in sandwiches %}
     <li><a href="{% url 'show_sandwich' sandwich.slug %}">{{ sandwich.name }}</a></li>
-    <li>{{ sandwich.image }}</li>
+    <img src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
     <li>Created by {{ sandwich.creator }}</li>
     {% if sandwich.likes == 1 %}
 		<li>{{ sandwich.likes }} Like</li>
