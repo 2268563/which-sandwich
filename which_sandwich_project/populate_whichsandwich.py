@@ -1,17 +1,32 @@
-import os
-import math
-import random
+import os, sys
+import math, random
+import shutil
+from PIL import Image
+from os import listdir
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
         'which_sandwich_project.settings')
 
 import django
 django.setup()
 from whichsandwich.models import User, Sandwich, Ingredient, Comment
-from PIL import Image
-from os import listdir
 from django.core.files import File
+from django.utils.text import slugify
 
 def populate():
+    # Returns True if population is completed successfully or False if otherwise
+
+    # Make sure we're in the script's directory
+    os.chdir(sys.path[0])
+
+    # Delete the user_images folder if there are no users
+    try:
+        if not User.objects.all():
+            print(" - Deleting expired user data")
+            shutil.rmtree('media/user_images', ignore_errors=True)
+    except django.db.utils.OperationalError as e:
+        print("Error: %s\nDid you remember to migrate?" % e)
+        return False;
 
     users = [
             {'username':"captainsandwich",
@@ -106,6 +121,9 @@ def populate():
         u.profile.favourites.add(*rand_selection(sandwich_objects, 0))
         u.save()
 
+    # Population completed successfully
+    return True
+
 def add_user(username, email):
     u = User.objects.get_or_create(username=username, email=email)[0]
     u.save()
@@ -122,14 +140,24 @@ def add_sandwich(sandwich):
     ingredients = sandwich['ingredients']
     image = sandwich['image']
 
-    s = Sandwich.objects.filter(name=name)
+    # Need this to check for existing sandwiches.
+    # It is not passed here on object creation since it is automatically 
+    # generated in models
+    temp_slug = slugify(name)
+
+    # Check if sandwich already exists in database
+    s = Sandwich.objects.filter(slug=temp_slug)
     if s.exists():
         return s[0]
+
     s = Sandwich.objects.create(creator=creator, name=name, image=image)
+
+    # Add ingredients for new sandwich
     for ingr in ingredients:
         s.ingredients.add(ingr)
     s.likes = random.randint(0,10)
     s.dislikes = random.randint(0,5)
+
     s.save()
     image.close()
     return s
@@ -142,9 +170,6 @@ def add_comment(user, sandwich, comment):
 def random_sandwich(users, ingredients, image):
     creator = users[random.randint(0, len(users)-1)]
     used_ingr = rand_selection(ingredients, 1)
-
-    # Sort ingredients to avoid duplicates. e.g. Cheese and Ham / Ham and Cheese
-    used_ingr.sort(key=lambda k:k.name)
 
     name = used_ingr[0].name
 
@@ -177,5 +202,7 @@ def rand_selection(items, minimum):
 
 if __name__ == '__main__':
     print("Starting Which Sandwich population script...")
-    populate()
-    print("Population completed")
+    if populate():
+        print("Population completed")
+    else:
+        print("Population failed\nCheck errors and try again")
