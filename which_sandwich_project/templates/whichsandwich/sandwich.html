@@ -10,53 +10,53 @@
 <div>
   {% if sandwich %}
   <h1 class="my-4">{{ sandwich.name }}
-	<small>Sandwich</small>
+    <small>Sandwich</small>
   </h1>
-  
+
   <div class="row">
-     
-    <div class="cold-md-8">
-	  <div class="img-fluid">{{ sandwich.image }}</div>
-	</div>
-	 
-	<div class="col-md-8"> 
+
+    <div class="cold-md-6">
+      <img class="image-fluid img-thumbnail" src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
+    </div>
+
+    <div class="col-md-6"> 
       <h3 class="my-3">Ingredients</h3>
-	  <ul>
-	    {% for ingredient in sandwich.ingredients.all %}
-	    <li>{{ ingredient.name }} ({{ ingredient.calories }} Calories)</li>
-	    {% endfor %}
-	  </ul>
-	  
-	  <h3 class="my-3">Sandwich Details</h3>
+      <ul>
+        {% for ingredient in sandwich.ingredients.all %}
+        <li>{{ ingredient.name }} ({{ ingredient.calories }} Calories)</li>
+        {% endfor %}
+      </ul>
+
+      <h3 class="my-3">Sandwich Details</h3>
       <ul>
         <li>Created by {{ sandwich.creator }}</li>
         {% if sandwich.likes == 1 %}
-	      <li>{{ sandwich.likes }} Like</li>
-	    {% else %}
-	      <li>{{ sandwich.likes }} Likes</li>
-	    {% endif %}
-	    {% if sandwich.dislikes == 1 %}
-	      <li>{{ sandwich.dislikes }} Dislike</li>
-	    {% else %}
-	      <li>{{ sandwich.dislikes }} Dislikes</li>
-	    {% endif %}
-		<li>Created on {{ sandwich.created_date }}</li>
+        <li>{{ sandwich.likes }} Like</li>
+        {% else %}
+        <li>{{ sandwich.likes }} Likes</li>
+        {% endif %}
+        {% if sandwich.dislikes == 1 %}
+        <li>{{ sandwich.dislikes }} Dislike</li>
+        {% else %}
+        <li>{{ sandwich.dislikes }} Dislikes</li>
+        {% endif %}
+        <li>Created on {{ sandwich.created_date }}</li>
       </ul>	
-	</div>
+    </div>
   </div>
-  
+
   <button class="like"><img src="{% static "images\like.png" %}" alt="Like" /></button>
   <button class="dislike"><img src="{% static "images\dislike.png" %}" alt="Dislike" /></button>
   {% if user.is_authenticated %}
   <button class="favourite"><img src="{% static "images\favourite.png" %}" alt="Favourite" /></button>
   {% endif %}
-  
+
   {% if user.is_authenticated %}
   <div>
     <h4><a href ="{% url 'comment' sandwich.slug %}">Click here</a> to comment on this sandwich!</h4>
   </div>
   {% endif %}
-  
+
   <div>
     {% if comments %}
     <ul>
@@ -73,9 +73,9 @@
 
   {% else %}
   The specified sandwich does not exist!
-	{% if user.is_authenticated %}
-	<p>Why not <a href ="{% url 'create_sandwich' %}">create</a> it?</p>
-	{% endif %}
+  {% if user.is_authenticated %}
+  <p>Why not <a href ="{% url 'create_sandwich' %}">create</a> it?</p>
+  {% endif %}
   {% endif %}
 </div>
 
