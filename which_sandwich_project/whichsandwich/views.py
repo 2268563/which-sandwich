@@ -66,19 +66,18 @@ def new(request):
     return response
 
 def controversial(request):
-
-    likes = Sandwich.objects.get('likes')
-    dislikes = Sandwich.objects.get('dislikes')
+    context_dict = {}
+    controversial_sandwiches = []
+    sandwiches = Sandwich.objects.all() 
 
     #After a set number of likes & dislikes, a sandwich becomes controversial
     #We then order them starting with those with the closest number of likes & dislikes
-    if likes>=5 and dislikes>=5:
-        controversial_sandwiches = Sandwich.objects.order_by(abs('likes'-'dislikes'))
-    
-        context_dict = {'sandwiches': controversial_sandwiches}
+    for i in sandwiches:
+        if i.likes>=5 and i.dislikes>=5:
+            controversial_sandwiches.append(i)
 
-    else:
-        context_dict = {'Controversial_sandwiches': None}
+    context_dict['sandwiches'] = controversial_sandwiches
+    
     response = render(request, 'whichsandwich/browse.html', context = context_dict)
     return response
 
