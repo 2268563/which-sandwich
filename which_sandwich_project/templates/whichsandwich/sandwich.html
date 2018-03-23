@@ -15,9 +15,11 @@
 
   <div class="row">
 
+    {% if sandwich.image %}
     <div class="cold-md-6">
       <img class="image-fluid img-thumbnail" src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
     </div>
+    {% endif %}
 
     <div class="col-md-6"> 
       <h3 class="my-3">Ingredients</h3>
