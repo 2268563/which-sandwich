@@ -14,6 +14,9 @@ My Account
   <ul>
     {% for sandwich in best_sandwiches %}
     <li><a href="{% url 'show_sandwich' sandwich.slug %}">{{ sandwich.name }}</a></li>
+    {% if sandwich.image %}
+    <img src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
+    {% endif %}
 	{% if sandwich.likes == 1 %}
 		<li>{{ sandwich.likes }} Like</li>
 	{% else %}
@@ -24,6 +27,7 @@ My Account
 	{% else %}
 		<li>{{ sandwich.dislikes }} Dislikes</li>
 	{% endif %}
+        <br/>
 	{% endfor %}
   </ul>
   {% else %}
@@ -37,7 +41,10 @@ My Account
   <ul>
     {% for sandwich in top_favourites %}
     <li><a href="{% url 'create_sandwich' sandwich.url %}">{{ sandwich.title }}</a></li>
-    <li>{{ sandwich.image }}</li>
+    {% if sandwich.image %}
+    <img src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
+    {% endif %}
+    <br/>
     {% endfor %}
   </ul>
   {% else %}

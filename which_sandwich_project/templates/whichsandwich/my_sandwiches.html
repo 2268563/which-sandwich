@@ -13,10 +13,13 @@ My Sandwiches
   <h2>My Sandwiches</h2>
   <ul>
     {% for sandwich in my_sandwiches %}
-    <li><a href="{% url 'show_sandwich' sandwich.url %}">{{ sandwich.title }}</a></li>
-    <li>{{ sandwich.image }}</li>
+    <li><a href="{% url 'show_sandwich' sandwich.slug %}">{{ sandwich.name }}</a></li>
+    {% if sandwich.image %}
+    <img src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
+    {% endif %}
     <li>{{ sandwich.likes }} likes</li>
     <li>{{ sandwich.dislikes }} dislikes</li>
+    <br/>
     {% endfor %}
   </ul>
   {% else %}
