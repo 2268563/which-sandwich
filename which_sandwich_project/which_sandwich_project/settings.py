@@ -31,7 +31,7 @@ SECRET_KEY = 'rjw6r%sl^it!x+a0#-4fi5jpr0^lr1j62_56zu@kz7$(i&@w-e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://whichsandwich.pythonanywhere.com']
+ALLOWED_HOSTS = ['whichsandwich.pythonanywhere.com']
 
 
 # Application definition
