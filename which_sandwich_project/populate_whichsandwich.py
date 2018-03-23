@@ -7,6 +7,9 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
 import django
 django.setup()
 from whichsandwich.models import User, Sandwich, Ingredient, Comment
+from PIL import Image
+from os import listdir
+from django.core.files import File
 
 def populate():
 
@@ -65,17 +68,26 @@ def populate():
     sandwiches = []
     comments = []
 
+    sandwich_stock_images = []
+    ## Get stock images
+    os.chdir(os.pardir)
+    os.chdir('stock_sandwich_images')
+
+    for image in os.listdir():
+        sandwich_image_path = os.path.join(os.getcwd(), image)
+        sandwich_stock_images.append(File(open(sandwich_image_path, 'rb')))
+
     # Generate sandwiches
     print(" - Generating random sandwiches")
-    for i in range(random.randint(10,20)):
-        sandwiches.append(random_sandwich(user_objects, ingredient_objects))
+    for image in sandwich_stock_images:
+        sandwiches.append(random_sandwich(user_objects, ingredient_objects, image))
 
     sandwich_objects = []
 
     # Add sandwiches to database
     print(" - Adding sandwiches to database")
     for sandwich in sandwiches:
-        sandwich_objects.append(add_sandwich(sandwich['creator'], sandwich['name'], sandwich['ingredients']))
+        sandwich_objects.append(add_sandwich(sandwich))
 
     # Generate zero or more comments for each sandwich
     print(" - Matching random comments to each sandwich")
@@ -104,16 +116,22 @@ def add_ingredient(name, calories):
     i.save()
     return i
 
-def add_sandwich(creator, name, ingredients):
+def add_sandwich(sandwich):
+    creator = sandwich['creator']
+    name = sandwich['name']
+    ingredients = sandwich['ingredients']
+    image = sandwich['image']
+
     s = Sandwich.objects.filter(name=name)
     if s.exists():
         return s[0]
-    s = Sandwich.objects.create(creator=creator, name=name)
+    s = Sandwich.objects.create(creator=creator, name=name, image=image)
     for ingr in ingredients:
         s.ingredients.add(ingr)
     s.likes = random.randint(0,10)
     s.dislikes = random.randint(0,5)
     s.save()
+    image.close()
     return s
 
 def add_comment(user, sandwich, comment):
@@ -121,7 +139,7 @@ def add_comment(user, sandwich, comment):
     c.save()
     return c
 
-def random_sandwich(users, ingredients):
+def random_sandwich(users, ingredients, image):
     creator = users[random.randint(0, len(users)-1)]
     used_ingr = rand_selection(ingredients, 1)
 
@@ -133,7 +151,12 @@ def random_sandwich(users, ingredients):
     if len(used_ingr) > 1:
         name += " and " + used_ingr[1].name
 
-    return {'creator':creator, 'name':name, 'ingredients':used_ingr}
+    return {
+            'creator':creator, 
+            'name':name, 
+            'ingredients':used_ingr,
+            'image':image
+            }
 
 def random_comment(users, sandwiches, comments):
     user = rand_selector(users).profile
