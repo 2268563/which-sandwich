@@ -19,4 +19,5 @@ urlpatterns = [
 	url(r'^browse/(?P<sandwich_slug>[\w\-]+)/comment/$', views.comment, name='comment'),
 	url(r'^like/$', views.like_sandwich, name='like_sandwich'),
 	url(r'^dislike/$', views.dislike_sandwich, name='dislike_sandwich'),
+	url(r'^favourite/$', views.add_to_favourites, name='favourite_sandiwich'),
 ]

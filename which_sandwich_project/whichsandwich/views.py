@@ -38,7 +38,14 @@ def browse(request):
 
 def show_sandwich(request, sandwich_slug):
     context_dict = {}
-
+    creator = request.user
+	
+    try:
+        creator = Profile.objects.get(user=creator)
+        context_dict['favourites'] = creator.favourites.all();
+    except:
+        context_dict['favourites'] = None
+	
     try:
         sandwich = Sandwich.objects.get(slug=sandwich_slug)
         context_dict['sandwich'] = sandwich
@@ -47,7 +54,6 @@ def show_sandwich(request, sandwich_slug):
     except Sandwich.DoesNotExist:
         context_dict['sandwich'] = None
         context_dict['comments'] = None
-
     return render(request, 'whichsandwich/sandwich.html', context_dict)
 
 def top(request):
@@ -251,6 +257,20 @@ def comment(request, sandwich_slug):
             print(form.errors)
 
     return render(request, 'whichsandwich/comment.html', {'form':form, 'sandwich':sandwich})
+
+def add_to_favourites(request):
+    creator = request.user
+    creator = Profile.objects.get(user=creator)
+    sw_name = None
+    if request.method == 'GET':
+        sw_name = request.GET['sandwich_name']
+    if sw_name:
+        sandwich = Sandwich.objects.get(name=sw_name)
+        if sandwich:
+            creator.favourites.add(sandwich)
+            creator.save()
+			
+    return HttpResponse("Added to favourites")
 	
 def like_sandwich(request):
     sw_name = None

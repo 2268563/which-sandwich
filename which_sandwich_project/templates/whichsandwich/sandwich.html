@@ -50,7 +50,9 @@
   <button id="like" sandwich="{{ sandwich.name }}" class="btn btn-primary  btn-sm" type="button">Like</button>
   <button id="dislike" sandwich="{{ sandwich.name }}" class="btn btn-primary  btn-sm" type="button">Dislike</button>
   {% if user.is_authenticated %}
-  <button id="favourite" sandwich="{{ sandwich.name }}" class="btn btn-primary  btn-sm" type="button">Add to Favourites</button>
+    {% if sandwich not in favourites %}
+      <span id="favourite_button"><button id="favourite" sandwich="{{ sandwich.name }}" class="btn btn-primary  btn-sm" type="button">Add to Favourites</button></span>
+    {% endif %}
   {% endif %}
 
   {% if user.is_authenticated %}
@@ -87,5 +89,6 @@
 
 {% block script_block %}
 <script src="{% static 'js/rate.js' %}"></script>
+<script src="{% static 'js/favourite.js' %}"></script>
 <script src="{% static 'js/jquery-ui.min.js' %}"></script>
 {% endblock %}
