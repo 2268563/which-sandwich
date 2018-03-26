@@ -1,0 +1,17 @@
+{% extends "whichsandwich/base.html" %}
+{% load bootstrap4 %}
+
+{% block title_block %}Sign up{% endblock %}
+
+{% block body_block %}
+<div class="col-5 mx-auto">
+  <h1 class="my-4">Sign Up</h1>
+  <form method="post" action="">
+    {% csrf_token %}
+    {% bootstrap_form form show_label=false %}
+    <div class="form-group text-right">
+      {% bootstrap_button "Register" button_type='submit' %}
+    </div>
+  </form>
+</div>
+{% endblock %}

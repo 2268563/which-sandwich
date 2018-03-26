@@ -31,11 +31,24 @@ DEBUG = True
 ALLOWED_HOSTS = ['whichsandwich.pythonanywhere.com',
         '127.0.0.1']
 
+# If True, users can register
+REGISTRATION_OPEN = True
+# One-week activation window
+ACCOUNT_ACTIVATION_DAYS = 7
+# If True, the user will be automatically logged in
+REGISTRATION_AUTO_LOGIN = True
+# Redirect to the following upon successful log in
+LOGIN_REDIRECT_URL = '/whichsandwich/'
+# Redirect to the following if not logged in and attempting
+# to access pages requiring authentication
+LOGIN_URL = '/accounts/login/'
+
 
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'registration',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

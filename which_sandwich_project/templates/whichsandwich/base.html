@@ -81,14 +81,14 @@
               <a class="nav-link" href="{% url 'create_sandwich'  %}">Create Sandwich</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'sign_out'  %}">Sign Out</a>
+              <a class="nav-link" href="{% url 'auth_logout'  %}?next=/whichsandwich/">Sign Out</a>
             </li>
             {% else %}
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'sign_in'  %}">Sign In</a>
+              <a class="nav-link" href="{% url 'auth_login'  %}">Sign In</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'sign_up'  %}">Sign Up</a>
+              <a class="nav-link" href="{% url 'registration_register'  %}">Sign Up</a>
             </li>
             {% endif %}
           </ul>
