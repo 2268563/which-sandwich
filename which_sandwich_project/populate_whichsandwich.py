@@ -155,8 +155,8 @@ def add_sandwich(sandwich):
     # Add ingredients for new sandwich
     for ingr in ingredients:
         s.ingredients.add(ingr)
-    s.likes = random.randint(0,10)
-    s.dislikes = random.randint(0,5)
+    s.likes = random.randint(0,100)
+    s.dislikes = random.randint(0,50)
 
     s.save()
     image.close()

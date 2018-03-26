@@ -6,7 +6,6 @@ from whichsandwich.models import Profile, Sandwich, Ingredient, Comment
 from whichsandwich.forms import UserForm, UserProfileForm, SandwichForm, CommentForm
 from django.urls import reverse
 
-
 def index(request):
     #http://127.0.0.1:8000/whichsandwich/
 
@@ -64,7 +63,6 @@ def top(request):
     return response
 
 def new(request):
-
     new_sandwiches = Sandwich.objects.order_by('-created_date')
     
     context_dict = {'sandwiches': new_sandwiches}
@@ -72,20 +70,30 @@ def new(request):
     return response
 
 def controversial(request):
-    context_dict = {}
-    controversial_sandwiches = []
-    sandwiches = Sandwich.objects.all() 
+    # Maximum percentage difference between likes and dislikes for controversy
+    max_perc_diff = 25
 
-    #After a set number of likes & dislikes, a sandwich becomes controversial
-    #We then order them starting with those with the closest number of likes & dislikes
-    for i in sandwiches:
-        if i.likes>=5 and i.dislikes>=5:
-            controversial_sandwiches.append(i)
+    # After a set number of likes & dislikes, a sandwich becomes elligible for controversy
+    sandwiches = Sandwich.objects.filter(likes__gt=10, dislikes__gt=10)
 
-    context_dict['sandwiches'] = controversial_sandwiches
+    c_sandwiches = []
+
+    # Get controversial sandwiches
+    for sandwich in sandwiches:
+        delta = abs(sandwich.likes - sandwich.dislikes)
+        avg = (sandwich.likes + sandwich.dislikes)/2
+        c_level = delta/avg*100
+        if c_level <= max_perc_diff:
+            # Add controversial sandwich to list alongside percentage difference
+            # between likes and dislikes
+            c_sandwiches.append([c_level, sandwich])
+
+    # Sort sandwiches by difference between likes and dislikes
+    c_sandwiches = sorted(c_sandwiches)
+    # Retrieve just the sandwich
+    c_sandwiches = [s for c,s in c_sandwiches]
     
-    response = render(request, 'whichsandwich/browse.html', context = context_dict)
-    return response
+    return render(request, 'whichsandwich/browse.html', {'sandwiches': c_sandwiches})
 
 def sandwich_name(request):
     
