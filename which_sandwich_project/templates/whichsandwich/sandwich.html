@@ -33,33 +33,35 @@
       <ul>
         <li>Created by {{ sandwich.creator }}</li>
         {% if sandwich.likes == 1 %}
-        <li>{{ sandwich.likes }} Like</li>
+        <li><span id="like_count">{{ sandwich.likes }}</span> Likes</li>
         {% else %}
-        <li>{{ sandwich.likes }} Likes</li>
+        <li><span id="like_count">{{ sandwich.likes }}</span> Likes</li>
         {% endif %}
         {% if sandwich.dislikes == 1 %}
-        <li>{{ sandwich.dislikes }} Dislike</li>
+        <li><span id="dislike_count">{{ sandwich.dislikes }}</span> Dislikes</li>
         {% else %}
-        <li>{{ sandwich.dislikes }} Dislikes</li>
+        <li><span id="dislike_count">{{ sandwich.dislikes }}</span> Dislikes</li>
         {% endif %}
         <li>Created on {{ sandwich.created_date }}</li>
       </ul>	
     </div>
   </div>
 
-  <button class="like"><img src="{% static "images\like.png" %}" alt="Like" /></button>
-  <button class="dislike"><img src="{% static "images\dislike.png" %}" alt="Dislike" /></button>
+  <button id="like" sandwich="{{ sandwich.name }}" class="btn btn-primary  btn-sm" type="button">Like</button>
+  <button id="dislike" sandwich="{{ sandwich.name }}" class="btn btn-primary  btn-sm" type="button">Dislike</button>
   {% if user.is_authenticated %}
-  <button class="favourite"><img src="{% static "images\favourite.png" %}" alt="Favourite" /></button>
+  <button id="favourite" sandwich="{{ sandwich.name }}" class="btn btn-primary  btn-sm" type="button">Add to Favourites</button>
   {% endif %}
 
   {% if user.is_authenticated %}
   <div>
+    <br/>
     <h4><a href ="{% url 'comment' sandwich.slug %}">Click here</a> to comment on this sandwich!</h4>
   </div>
   {% endif %}
 
   <div>
+    <br/>
     {% if comments %}
     <ul>
       {% for comment in comments %}
@@ -81,4 +83,9 @@
   {% endif %}
 </div>
 
+{% endblock %}
+
+{% block script_block %}
+<script src="{% static 'js/rate.js' %}"></script>
+<script src="{% static 'js/jquery-ui.min.js' %}"></script>
 {% endblock %}

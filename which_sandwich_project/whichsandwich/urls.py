@@ -17,4 +17,6 @@ urlpatterns = [
     url(r'^browse/controversial/$', views.controversial, name='controversial'),
     url(r'^browse/(?P<sandwich_slug>[\w\-]+)/$', views.show_sandwich, name='show_sandwich'),
 	url(r'^browse/(?P<sandwich_slug>[\w\-]+)/comment/$', views.comment, name='comment'),
+	url(r'^like/$', views.like_sandwich, name='like_sandwich'),
+	url(r'^dislike/$', views.dislike_sandwich, name='dislike_sandwich'),
 ]

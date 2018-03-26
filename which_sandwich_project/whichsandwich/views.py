@@ -251,3 +251,29 @@ def comment(request, sandwich_slug):
             print(form.errors)
 
     return render(request, 'whichsandwich/comment.html', {'form':form, 'sandwich':sandwich})
+	
+def like_sandwich(request):
+    sw_name = None
+    if request.method == 'GET':
+        sw_name = request.GET['sandwich_name']
+        likes = 0;
+    if sw_name:
+        sandwich = Sandwich.objects.get(name=sw_name)
+        if sandwich:
+            likes = sandwich.likes + 1
+            sandwich.likes = likes
+            sandwich.save()
+    return HttpResponse(likes)
+	
+def dislike_sandwich(request):
+    sw_name = None
+    if request.method == 'GET':
+        sw_name = request.GET['sandwich_name']
+        dislikes = 0;
+    if sw_name:
+        sandwich = Sandwich.objects.get(name=sw_name)
+        if sandwich:
+            dislikes = sandwich.dislikes + 1
+            sandwich.dislikes = dislikes
+            sandwich.save()
+    return HttpResponse(dislikes)
