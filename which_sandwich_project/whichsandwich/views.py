@@ -103,9 +103,11 @@ def sandwich_name(request):
 @login_required
 def my_account(request):
     best_sandwiches = Sandwich.objects.filter(creator=request.user).order_by('-likes', 'dislikes')
+    top_favourites = request.user.profile.favourites.all().order_by('-likes', 'dislikes')[0:5]
 
     context_dict = {
             'best_sandwiches': best_sandwiches,
+			'top_favourites': top_favourites,
             }
 
     return render(request, 'whichsandwich/my_account.html', context = context_dict)

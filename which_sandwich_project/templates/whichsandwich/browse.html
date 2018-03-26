@@ -16,7 +16,7 @@ Browse
     {% if sandwich.image %}
     <img src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
     {% endif %}
-    <li>Created by {{ sandwich.creator }}</li>
+    <li>Created by <strong>{{ sandwich.creator }}</strong></li>
     {% if sandwich.likes == 1 %}
 		<li>{{ sandwich.likes }} Like</li>
 	{% else %}

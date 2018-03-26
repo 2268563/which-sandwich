@@ -40,10 +40,11 @@ My Account
   <h2>My Top Five Favourites</h2>
   <ul>
     {% for sandwich in top_favourites %}
-    <li><a href="{% url 'create_sandwich' sandwich.url %}">{{ sandwich.title }}</a></li>
+    <li><a href="{% url 'show_sandwich' sandwich.slug %}">{{ sandwich.name }}</a></li>
     {% if sandwich.image %}
     <img src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
     {% endif %}
+	<li>Created by <strong>{{ sandwich.creator }}</strong></li>
     <br/>
     {% endfor %}
   </ul>

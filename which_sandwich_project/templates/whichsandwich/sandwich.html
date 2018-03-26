@@ -31,7 +31,7 @@
 
       <h3 class="my-3">Sandwich Details</h3>
       <ul>
-        <li>Created by {{ sandwich.creator }}</li>
+        <li>Created by <strong>{{ sandwich.creator }}</strong></li>
         {% if sandwich.likes == 1 %}
         <li><span id="like_count">{{ sandwich.likes }}</span> Likes</li>
         {% else %}
@@ -67,7 +67,7 @@
     {% if comments %}
     <ul>
       {% for comment in comments %}
-      <li>Submitted by {{ comment.user }}</li>
+      <li>Submitted by <strong>{{ comment.user }}</strong></li>
       <li>{{ comment.comment }}</li>
       <br/>
       {% endfor %}	
