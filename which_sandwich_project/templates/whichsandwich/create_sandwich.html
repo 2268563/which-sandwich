@@ -7,12 +7,48 @@ Create a Sandwich
 {% endblock %}
 
 {% block body_block %}
+<h1 class="my-4">Create a Sandwich</h1>
+
 <form id="sandwich_form" enctype="multipart/form-data" method="post" action="{% url 'create_sandwich' %}">
-  <h2>Create a Sandwich</h2>
   {% csrf_token %}
-  {% bootstrap_form form show_label=false %}
-  <br/>
-  <button type="submit" name="submit">Create</button>
+
+  {% bootstrap_field form.name show_label=false %}
+  {% bootstrap_field form.image show_label=false %}
+  {% bootstrap_field form.ingredients show_label=false form_group_class='form-group hidden' %}
+
+  <div class="form-group">
+    <!-- Ingredients Selection Row --> 
+    <div class="row">
+      <div class="col">
+        <h4>Available</h4>
+        <div class="ingredients-container border rounded border-dark">
+          <div class="list-group" id="available-ingredients">
+            {% for value,label in form.get_ingredients %}
+            <a href="#" class="list-group-item list-group-item-action border rounded" value={{ value }}>{{ label }}</a>
+            {% endfor %}
+          </div>
+        </div>      
+      </div>
+      <div class="col">
+        <h4>Used</h4>
+        <div class="ingredients-container border rounded border-dark">
+          <div class="list-group" id="used-ingredients">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.row -->  
+  </div>
+  <div class="form-group text-right">
+    {% bootstrap_button "Submit" button_type='submit' %}
+    {% bootstrap_button "Reset" button_type='reset' %}
+  </div>
+
 </form>
+
 {% endblock %}
 
+{% block script_block %}
+<script src="{% static 'js/create_sandwich.js' %}"></script>
+<script src="{% static 'js/jquery-ui.min.js' %}"></script>
+{% endblock %}

@@ -17,7 +17,11 @@ class SandwichForm(forms.ModelForm):
     class Meta:
         model = Sandwich
         fields = ('name', 'image', 'ingredients')
-		
+
+    def get_ingredients(self):
+        return [(value,label) for value,label in self.fields['ingredients'].choices]
+
+
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment

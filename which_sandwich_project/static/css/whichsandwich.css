@@ -7,3 +7,16 @@ body {
     padding-top: 56px;
   }
 }
+
+.ingredients-container {
+  overflow: auto;
+  height: 300px;
+}
+
+.hidden {
+  display: none;
+}
+
+#available-ingredients, #used-ingredients {
+  height: 100%;
+}

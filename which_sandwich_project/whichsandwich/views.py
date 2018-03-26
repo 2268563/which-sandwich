@@ -204,7 +204,6 @@ def my_favourites(request):
 
 @login_required
 def create_sandwich(request):
-    creator = request.user
     form = SandwichForm()
 
     if request.method == 'POST':
@@ -212,7 +211,7 @@ def create_sandwich(request):
 
         if form.is_valid():
             sandwich = form.save(commit=False)
-            sandwich.creator = creator
+            sandwich.creator = request.user
             sandwich.save()
             form.save_m2m()
             return show_sandwich(request, sandwich.slug)

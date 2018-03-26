@@ -8,56 +8,45 @@ Home
 
 {% block body_block %}
 
-<!-- Page Content -->
-<div class="container">
+<h1 class="my-4">Sandwich of the Day
+</h1>
 
-  <!-- Portfolio Item Heading -->
-  <h1 class="my-4">Sandwich of the Day
-  </h1>
+<div class="row" height=400px>
 
-  <!-- Portfolio Item Row -->
-  <div class="row" height=400px>
-
-    <div class="col-md-6">
-      <a href="{% url 'show_sandwich' sotd.slug %}">
+  <div class="col-md-6">
+    <a href="{% url 'show_sandwich' sotd.slug %}">
       <img class="img-fluid img-thumbnail" src="{{ sotd.image.url }}" alt="Sandwich of the Day">
-      </a>
-    </div>
-
-    <div class="col-md-6">
-      <h3 class="my-3">Ingredients</h3>
-      <ul>
-        {% for ingredients in sotd.ingredients.all %}
-        <li>{{ ingredients.name }}</li>
-        {% endfor %}
-      </ul>
-    </div>
-
+    </a>
   </div>
-  <!-- /.row -->
 
-  <!-- Related Projects Row -->
-  <h3 class="my-4">More Sandwiches</h3>
-
-  <div class="row">
-
-    {% if top_sandwiches %}
-
-    {% for sandwich in top_sandwiches %}
-    <div class="col-md-3 col-sm-6 mb-4">
-      <a href="{% url 'show_sandwich' sandwich.slug %}">
-        <img class="img-fluid img-thumbnail" src="{{ sandwich.image.url }}" alt="">
-      </a>
-    </div>
-    {% endfor %}
-
-    {% else %}
-    <strong>There are no sandwiches present.</strong>
-    {% endif %}
-
+  <div class="col-md-6">
+    <h3 class="my-3">Ingredients</h3>
+    <ul>
+      {% for ingredients in sotd.ingredients.all %}
+      <li>{{ ingredients.name }}</li>
+      {% endfor %}
+    </ul>
   </div>
-  <!-- /.row -->
 
 </div>
-<!-- /.container -->
+
+<h3 class="my-4">More Sandwiches</h3>
+
+<div class="row">
+
+  {% if top_sandwiches %}
+
+  {% for sandwich in top_sandwiches %}
+  <div class="col-md-3 col-sm-6 mb-4">
+    <a href="{% url 'show_sandwich' sandwich.slug %}">
+      <img class="img-fluid img-thumbnail" src="{{ sandwich.image.url }}" alt="">
+    </a>
+  </div>
+  {% endfor %}
+
+  {% else %}
+  <strong>There are no sandwiches present.</strong>
+  {% endif %}
+
+</div>
 {% endblock %}
