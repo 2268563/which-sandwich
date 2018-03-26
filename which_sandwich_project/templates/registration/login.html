@@ -1,0 +1,20 @@
+{% extends "whichsandwich/base.html" %}
+{% load bootstrap4 %}
+
+{% block title_block %}Sign in{% endblock %}
+
+{% block body_block %}
+<div class="col-4 mx-auto">
+  <h1 class="my-4">Sign In</h1>
+  <form method="post" action="">
+    {% csrf_token %}
+    {% bootstrap_form form show_label=false %}
+    <div class="form-group text-right">
+      {% bootstrap_button "Log in" button_type='submit' %}
+      <input type="hidden" name="next" value="{{ next }}" />
+      <p class="my-1">Forgot your password? <a href="{% url 'auth_password_reset' %}">Reset it</a>.</p>
+      <p class="my-1">Not a member? <a href="{% url 'registration_register' %}">Register</a>.</p>
+    </div>
+  </form>
+</div>
+{% endblock %}

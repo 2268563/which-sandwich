@@ -94,87 +94,6 @@ def sandwich_name(request):
     response = render(request, 'whichsandwich/browse.html', context = context_dict)
     return response
 
-
-def sign_up(request):
-    # A boolean value for telling the template
-    # whether the registration was successful.
-    # Set to False initially. Code changes value to
-    # True when registration succeeds.
-    registered = False
-
-    # If it's a HTTP POST, we're interested in processing form data.
-    if request.method == 'POST':
-        # Attempt to grab information from the raw form information.
-        user_form = UserForm(data=request.POST)
-        
-        # If the two forms are valid...
-        if user_form.is_valid():
-            # Create the user instance
-            user = user_form.save(commit=False)
-            
-            # Now we hash the password with the set_password method.
-            user.set_password(user.password)
-            
-            # User profile is created automatically
-            
-            # Did the user provide a profile picture?
-            # If so, we need to get it from the input form and
-            # put it in the UserProfile model.
-            if 'picture' in request.FILES:
-                user.profile.picture = request.FILES['picture']
-                
-            # Now we save the UserProfile model instance.
-            user.save()
-            
-            # Update our variable to indicate that the template
-            # registration was successful.
-            registered = True
-        else:
-            # Invalid form or forms - mistakes or something else?
-            # Print problems to the terminal.
-            print(user_form.errors)
-    else:
-        # Not a HTTP POST, so we render our form using two ModelForm instances.
-        # These forms will be blank, ready for user input.
-        user_form = UserForm()
-        
-    # Render the template depending on the context.
-    return render(request,
-                  'whichsandwich/sign_up.html',
-                  {'user_form': user_form,
-                   'registered': registered})
-
-def sign_in(request):
-
-    # If the request is a HTTP POST, try to pull out the relevant information.
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
-        
-        if user:
-
-             # Is the account active? It could have been disabled.
-            if user.is_active:
-                login(request, user)
-                return HttpResponseRedirect(reverse('index'))
-            else:
-                return HttpResponse("Your WhichSandwich account is disabled.")
-        else:
-            # Bad login details were provided. So we can't log the user in.
-            print("Invalid login details: {0}, {1}".format(username, password))
-            return HttpResponse("Invalid login details supplied.")
-        
-    # The request is not a HTTP POST, so display the login form.
-    # This scenario would most likely be a HTTP GET.
-    else:
-        return render(request, 'whichsandwich/sign_in.html', {})
-
-@login_required
-def sign_out(request):
-    logout(request)
-    return HttpResponseRedirect(reverse('index'))
-
 @login_required
 def my_account(request):
     best_sandwiches = Sandwich.objects.filter(creator=request.user).order_by('-likes', 'dislikes')
@@ -224,11 +143,6 @@ def about(request):
 
     #No need for context_dict if we do not show user's number of visits.
     return render(request, 'whichsandwich/about.html')
-
-# This will be used for all restricted views.
-@login_required
-def restricted(request):
-     return render(request, 'rango/restricted.html', {})
 
 @login_required
 def comment(request, sandwich_slug):
