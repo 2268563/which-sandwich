@@ -1,10 +1,21 @@
 <div class="container">
   <div class="row">
-    <div class="col">
-      <img src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
+    <div class="col-8">
+      <img class="img-fluid img-thumbnail" src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
     </div>
-    <div class="col">
-      hello world
+    <div class="col-4">
+      <p>Made by {{ sandwich.creator }}</p>
+      <p>Ingredients:</p>
+      <ul>
+        {% for ingredient in sandwich.ingredients.all %}
+        <li>{{ ingredient }}</li>
+        {% endfor %}
+      </ul>
+
+      {% if comment %}
+      {{ comment.user }} says:
+      <p class="bg-light p-2">{{ comment.comment }}</p>
+      {% endif %}
     </div>
   </div>
 </div>

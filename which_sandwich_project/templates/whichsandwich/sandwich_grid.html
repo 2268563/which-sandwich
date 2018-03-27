@@ -1,6 +1,6 @@
 {% if sandwiches %}
 {% for sandwich in sandwiches %}
-<div class="sandwich col-md-4 pb-4" id="{{ sandwich.id }}"  >
+<div class="sandwich col-md-4 pb-4" id="{{ sandwich.id }}" name="{{ sandwich.name }}">
   <a href="#!">
     <h4 class="image-overlay">{{ sandwich.name }}</h4>
     {% if sandwich.image %}
