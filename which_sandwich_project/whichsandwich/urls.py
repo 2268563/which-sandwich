@@ -10,6 +10,7 @@ urlpatterns = [
         url(r'^create_sandwich/$', views.create_sandwich, name='create_sandwich'),
         url(r'^browse/$', views.browse, name='browse'),
         url(r'^browse_filter/$', views.browse_filter, name='browse_filter'),
+        url(r'^modal_sandwich/$', views.modal_sandwich, name='modal_sandwich'),
         url(r'^browse/(?P<sandwich_slug>[\w\-]+)/$', views.show_sandwich, name='show_sandwich'),
         url(r'^browse/(?P<sandwich_slug>[\w\-]+)/comment/$', views.comment, name='comment'),
         url(r'^like/$', views.like_sandwich, name='like_sandwich'),

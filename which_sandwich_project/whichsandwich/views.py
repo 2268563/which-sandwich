@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from whichsandwich.models import Profile, Sandwich, Ingredient, Comment
 from whichsandwich.forms import UserForm, UserProfileForm, SandwichForm, CommentForm
 from django.urls import reverse
+import random
 
 def index(request):
     #http://127.0.0.1:8000/whichsandwich/
@@ -24,6 +25,20 @@ def index(request):
 
 def browse(request):
     return render(request, 'whichsandwich/browse.html')
+
+def modal_sandwich(request):
+    context_dict = {}
+    if request.method == 'GET':
+        sandwich_id = request.GET['sandwich_id']
+        sandwich = Sandwich.objects.get(id=sandwich_id)
+        context_dict['sandwich'] = sandwich
+        try:
+            comments = Comment.objects.filter(sandwich=sandwich)
+            rand_comment_index = random.randint(0,len(comments))
+            context_dict['comment'] = comments[rand_comment_index]
+        except:
+            context_dict['comment'] = None
+    return render(request, 'whichsandwich/modal_sandwich.html', context_dict)
 
 def browse_filter(request):
     sort_filter = None
@@ -61,14 +76,14 @@ def top(request):
     top_sandwiches = Sandwich.objects.order_by('-likes')
     
     context_dict = {'sandwiches': top_sandwiches}
-    response = render(request, 'whichsandwich/browse_items.html', context = context_dict)
+    response = render(request, 'whichsandwich/sandwich_grid.html', context = context_dict)
     return response
 
 def new(request):
     new_sandwiches = Sandwich.objects.order_by('-created_date')
     
     context_dict = {'sandwiches': new_sandwiches}
-    response = render(request, 'whichsandwich/browse_items.html', context = context_dict)
+    response = render(request, 'whichsandwich/sandwich_grid.html', context = context_dict)
     return response
 
 def controversial(request):
@@ -95,7 +110,7 @@ def controversial(request):
     # Retrieve just the sandwich
     c_sandwiches = [s for c,s in c_sandwiches]
     
-    return render(request, 'whichsandwich/browse_items.html', {'sandwiches': c_sandwiches})
+    return render(request, 'whichsandwich/sandwich_grid.html', {'sandwiches': c_sandwiches})
 
 def sandwich_name(request):
     
@@ -135,8 +150,7 @@ def my_sandwiches(request):
 def my_favourites(request):
     context_dict = {}
     favourites = request.user.profile.favourites.all()
-    print(favourites)
-    context_dict['favourites'] = favourites
+    context_dict['sandwiches'] = favourites
     return render(request, 'whichsandwich/my_favourites.html', context=context_dict)
 
 @login_required
@@ -164,8 +178,7 @@ def about(request):
 
 @login_required
 def comment(request, sandwich_slug):
-    creator = request.user
-    creator = Profile.objects.get(user=creator)
+    creator = request.user.profile
     sandwich = Sandwich.objects.get(slug=sandwich_slug)
     form = CommentForm()
 
