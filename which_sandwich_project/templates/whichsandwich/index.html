@@ -15,6 +15,7 @@ Home
 
   <div class="col-md-6">
     <a href="{% url 'show_sandwich' sotd.slug %}">
+      <h4 class="image-overlay">{{ sotd.name }}</h4>
       <img class="img-fluid img-thumbnail" src="{{ sotd.image.url }}" alt="Sandwich of the Day">
     </a>
   </div>
@@ -39,6 +40,7 @@ Home
   {% for sandwich in top_sandwiches %}
   <div class="col-md-3 col-sm-6 mb-4">
     <a href="{% url 'show_sandwich' sandwich.slug %}">
+      <h4 class="image-overlay">{{ sandwich.name }}</h4>
       <img class="img-fluid img-thumbnail" src="{{ sandwich.image.url }}" alt="">
     </a>
   </div>
