@@ -30,7 +30,7 @@ def browse(request):
         sandwiches = Sandwich.objects.all()
         context_dict['sandwiches'] = sandwiches
     except Sandwich.DoesNotExist:
-        context_dict['wandwiches'] = None
+        context_dict['sandwiches'] = None
         
     response = render(request, 'whichsandwich/browse.html', context = context_dict)
     return response
