@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.text import slugify
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
+from django.contrib.staticfiles.templatetags.staticfiles import static
 import os.path
 
 class Profile(models.Model):
@@ -29,7 +32,10 @@ def user_directory_path(instance, filename):
 class Sandwich(models.Model):
     creator = models.ForeignKey(User, on_delete=models.PROTECT)
     name = models.CharField(max_length=256, unique=True)
-    image = models.ImageField(upload_to=user_directory_path, blank=True)
+    image = ProcessedImageField(blank=True, upload_to=user_directory_path,
+            processors=[ResizeToFill(650, 500)],
+            format='JPEG',
+            options={'quality':80},)
     ingredients = models.ManyToManyField('Ingredient')
     likes = models.PositiveIntegerField(blank=True, default=0)
     dislikes = models.PositiveIntegerField(blank=True, default=0)

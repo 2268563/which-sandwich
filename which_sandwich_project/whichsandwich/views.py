@@ -34,9 +34,10 @@ def modal_sandwich(request):
         context_dict['sandwich'] = sandwich
         try:
             comments = Comment.objects.filter(sandwich=sandwich)
-            rand_comment_index = random.randint(0,len(comments))
+            rand_comment_index = random.randint(0,len(comments) - 1)
             context_dict['comment'] = comments[rand_comment_index]
-        except:
+        except (IndexError, ValueError) as e:
+            print(e)
             context_dict['comment'] = None
     return render(request, 'whichsandwich/modal_sandwich.html', context_dict)
 

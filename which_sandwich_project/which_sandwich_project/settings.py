@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'whichsandwich',
     'bootstrap4',
+    'imagekit',
 ]
 
 MIDDLEWARE = [
