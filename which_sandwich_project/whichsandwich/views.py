@@ -26,7 +26,7 @@ def index(request):
 def browse(request):
     return render(request, 'whichsandwich/browse.html')
 
-def sandwich_modal(request):
+def modal_sandwich(request):
     context_dict = {}
     if request.method == 'GET':
         sandwich_id = request.GET['sandwich_id']
@@ -38,7 +38,7 @@ def sandwich_modal(request):
             context_dict['comment'] = comments[rand_comment_index]
         except:
             context_dict['comment'] = None
-    return render(request, 'whichsandwich/sandwich_modal.html', context_dict)
+    return render(request, 'whichsandwich/modal_sandwich.html', context_dict)
 
 def browse_filter(request):
     sort_filter = None
@@ -150,8 +150,7 @@ def my_sandwiches(request):
 def my_favourites(request):
     context_dict = {}
     favourites = request.user.profile.favourites.all()
-    print(favourites)
-    context_dict['favourites'] = favourites
+    context_dict['sandwiches'] = favourites
     return render(request, 'whichsandwich/my_favourites.html', context=context_dict)
 
 @login_required
