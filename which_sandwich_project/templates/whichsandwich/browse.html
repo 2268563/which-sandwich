@@ -6,6 +6,25 @@ Browse
 {% endblock %}
 
 {% block body_block %}
+<div class="modal fade" id="sandwichModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>  
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Sandwich content entered here dynamically using ajax -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="row">
   <h1 class="col-6 my-4">Browse</h1>
   <div class="col-6 mt-5 text-right">
@@ -21,6 +40,7 @@ Browse
   </div>
 </div>
 <div class="row" id="sandwich_display">
+  <!-- Sandwich content entered here dynamically using ajax -->
 </div>
 {% endblock %}
 

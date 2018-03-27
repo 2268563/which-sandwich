@@ -25,6 +25,13 @@ def index(request):
 def browse(request):
     return render(request, 'whichsandwich/browse.html')
 
+def sandwich_modal(request):
+    context_dict = {}
+    if request.method == 'GET':
+        sandwich_id = request.GET['sandwich_id']
+        context_dict['sandwich'] = Sandwich.objects.get(id=sandwich_id)
+    return render(request, 'whichsandwich/sandwich_modal.html', context_dict)
+
 def browse_filter(request):
     sort_filter = None
     if request.method == 'GET':
