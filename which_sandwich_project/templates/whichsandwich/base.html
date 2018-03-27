@@ -37,9 +37,6 @@
                 <span class="sr-only">(current)</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'about'  %}">About</a>
-            </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" area-expanded="false" href="#!">
                 Browse
@@ -59,8 +56,14 @@
                 </li>
               </ul>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'about'  %}">About</a>
+            </li>
 
             {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'create_sandwich'  %}">Create Sandwich</a>
+            </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" area-expanded="false" href="#!">
                 Account
@@ -76,9 +79,6 @@
                   <a class="nav-link" href="{% url 'my_sandwiches'  %}">My Sandwiches</a>
                 </li>
               </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'create_sandwich'  %}">Create Sandwich</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'auth_logout'  %}?next=/whichsandwich/">Sign Out</a>
