@@ -1,0 +1,13 @@
+{% if sandwiches %}
+{% for sandwich in sandwiches %}
+<a href="{% url 'show_sandwich' sandwich.slug %}" class="col-md-6">
+  {% if sandwich.image %}
+  <img class="img-fluid img-thumbnail" src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
+  {% else %}
+  {{ sandwich.name }}
+  {% endif %}
+</a>
+{% endfor %}
+{% else %}
+<p>There are no sandwiches.</p><br>
+{% endif %}

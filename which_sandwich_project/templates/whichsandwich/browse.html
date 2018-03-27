@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 {% extends 'whichsandwich/base.html' %}
 {% load staticfiles %}
 
@@ -7,33 +6,20 @@ Browse
 {% endblock %}
 
 {% block body_block %}
-
-<div>
-  {% if sandwiches %}
-  <ul>
-    {% for sandwich in sandwiches %}
-    <li><a href="{% url 'show_sandwich' sandwich.slug %}">{{ sandwich.name }}</a></li>
-    {% if sandwich.image %}
-    <img class="img-fluid img-thumbnail" src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
-    {% endif %}
-    <li>Created by <strong>{{ sandwich.creator }}</strong></li>
-    {% if sandwich.likes == 1 %}
-		<li>{{ sandwich.likes }} Like</li>
-	{% else %}
-		<li>{{ sandwich.likes }} Likes</li>
-	{% endif %}
-	{% if sandwich.dislikes == 1 %}
-		<li>{{ sandwich.dislikes }} Dislike</li>
-	{% else %}
-		<li>{{ sandwich.dislikes }} Dislikes</li>
-	{% endif %}
-	<li>Created on {{ sandwich.created_date }}</li>
-	<br/>
-    {% endfor %}
-  </ul>
-  {% else %}
-  <p>There are no sandwiches.</p><br>
-  {% endif %}
+<div class="row">
+  <div class="dropdown ml-auto">
+    <button class="btn btn-secondary dropdown-toggle" id="sortButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort By</button>
+    <div class="dropdown-menu" aria-labelledby="sortButton">
+      <a class="dropdown-item" id="top" href="#">Top</a>
+      <a class="dropdown-item" id="new" href="#">New</a>
+      <a class="dropdown-item" id="controversial" href="#">Controversial</a>
+    </div>
+  </div>
 </div>
+<div class="row" id="sandwich_display">
+</div>
+{% endblock %}
 
+{% block script_block %}
+<script src="{% static 'js/browse.js' %}"></script>
 {% endblock %}

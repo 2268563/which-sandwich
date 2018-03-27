@@ -23,17 +23,19 @@ def index(request):
     #How do we define sandwich of the day
 
 def browse(request):
-    context_dict = {}
-    
-    try:
-        # If we can't, the .get() method raises a DoesNotExist exception.
-        sandwiches = Sandwich.objects.all()
-        context_dict['sandwiches'] = sandwiches
-    except Sandwich.DoesNotExist:
-        context_dict['sandwiches'] = None
-        
-    response = render(request, 'whichsandwich/browse.html', context = context_dict)
-    return response
+    return render(request, 'whichsandwich/browse.html')
+
+def browse_filter(request):
+    sort_filter = None
+    if request.method == 'GET':
+        sort_filter = request.GET['sort_filter']
+    if sort_filter == 'new':
+        return new(request)
+    elif sort_filter == 'controversial':
+        return controversial(request)
+    else:
+        # Top by default
+        return top(request)
 
 def show_sandwich(request, sandwich_slug):
     context_dict = {}
@@ -59,14 +61,14 @@ def top(request):
     top_sandwiches = Sandwich.objects.order_by('-likes')
     
     context_dict = {'sandwiches': top_sandwiches}
-    response = render(request, 'whichsandwich/browse.html', context = context_dict)
+    response = render(request, 'whichsandwich/browse_items.html', context = context_dict)
     return response
 
 def new(request):
     new_sandwiches = Sandwich.objects.order_by('-created_date')
     
     context_dict = {'sandwiches': new_sandwiches}
-    response = render(request, 'whichsandwich/browse.html', context = context_dict)
+    response = render(request, 'whichsandwich/browse_items.html', context = context_dict)
     return response
 
 def controversial(request):
@@ -93,7 +95,7 @@ def controversial(request):
     # Retrieve just the sandwich
     c_sandwiches = [s for c,s in c_sandwiches]
     
-    return render(request, 'whichsandwich/browse.html', {'sandwiches': c_sandwiches})
+    return render(request, 'whichsandwich/browse_items.html', {'sandwiches': c_sandwiches})
 
 def sandwich_name(request):
     
