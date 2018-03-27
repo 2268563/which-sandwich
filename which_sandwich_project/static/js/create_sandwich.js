@@ -18,4 +18,15 @@ $(document).ready(function() {
             $("#id_ingredients option["+arg+"]").prop("selected", "selected");;
         });
     });
+
+    $("#submitButton").click(function() {
+        var used_ings = $("#used-ingredients").children();
+        if (used_ings.length == 0) {
+           var t = $("#ingredients-warning").removeClass("invisible");
+        }
+    });
+
+    $("#resetButton").click(function() {
+        location.reload();      
+    });
 });
