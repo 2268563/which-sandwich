@@ -74,9 +74,14 @@ class Ingredient(models.Model):
     calories = models.PositiveIntegerField()
 
     def __str__(self):
+        
         if (self.name == ''):
             self.name = 'default_name'
         return self.name
+
+    def save(self, *args, **kwargs):
+        if (self.calories < 0):
+            self.calories = 0
 
 class Comment(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.PROTECT)

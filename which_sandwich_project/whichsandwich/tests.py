@@ -18,9 +18,15 @@ class SandwichMethodTests(TestCase):
         user = User.objects.create_user(username = 'max',
                                         email = 'max@test.com',
                                         password = 'mario')
-        sd = Sandwich(creator = user, slug='Random Sandwich String')
+        sd = Sandwich(creator = user, slug ='Random Sandwich String')
         sd.save()
-        self.assertEqual(Sandwich.slug, 'random-sandwich-string')
+        self.assertEqual(sd.slug, 'random-sandwich-string')
+    
+    def test_ensure_sandwich_has_ingredients(self):
+        ing = Ingredient(name='',calories=0)
+        sd_ing = Sandwich(ingredients = ing)
+        sd_ing.save()
+        self.assertEqual((sd_ing.ingredients != ing),True)
     '''
     def test_ensure_sandwich_has_name(self):
         sd = Sandwich(name= '')
@@ -50,6 +56,11 @@ class IngredientMethodTests(TestCase):
         ing = Ingredient(name= '')
         ing.__str__()
         self.assertEqual((ing.name != ''), True)
+
+    def test_ensure_calories_are_positive(self):
+        cal = Ingredient(name = 'test', calories = -1)
+        cal.save()
+        self.assertEqual((cal.calories >= 0), True)
 
 class CommentMethodTests(TestCase):
     def test_ensure_comment_not_empty(self):
