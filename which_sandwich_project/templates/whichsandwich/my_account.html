@@ -7,50 +7,29 @@ My Account
 {% endblock %}
 
 {% block body_block %}
+{% include 'whichsandwich/modal.html' %}
 
-<div>
-  {% if best_sandwiches %}
-  <h2>My Best Received Sandwiches</h2>
-  <ul>
-    {% for sandwich in best_sandwiches %}
-    <li><a href="{% url 'show_sandwich' sandwich.slug %}">{{ sandwich.name }}</a></li>
-    {% if sandwich.image %}
-    <img src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
+<div class="row" id="sandwich_display">
+  <div class="col-md-6">
+    {% if best_sandwiches %}
+    <h3 class="my-4">My Best Received Sandwiches</h3>
+    {% include 'whichsandwich/sandwich_column.html' with sandwiches=best_sandwiches %}
+    {% else %}
+    <strong>You have no rated sandwiches.</strong>
     {% endif %}
-	{% if sandwich.likes == 1 %}
-		<li>{{ sandwich.likes }} Like</li>
-	{% else %}
-		<li>{{ sandwich.likes }} Likes</li>
-	{% endif %}
-	{% if sandwich.dislikes == 1 %}
-		<li>{{ sandwich.dislikes }} Dislike</li>
-	{% else %}
-		<li>{{ sandwich.dislikes }} Dislikes</li>
-	{% endif %}
-        <br/>
-	{% endfor %}
-  </ul>
-  {% else %}
-  <strong>You have no rated sandwiches.</strong>
-  {% endif %}
-</div>
+  </div>
 
-<div>
-  {% if top_favourites %}
-  <h2>My Top Five Favourites</h2>
-  <ul>
-    {% for sandwich in top_favourites %}
-    <li><a href="{% url 'show_sandwich' sandwich.slug %}">{{ sandwich.name }}</a></li>
-    {% if sandwich.image %}
-    <img src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
+  <div class="col-md-6">
+    {% if top_favourites %}
+    <h3 class="my-4">My Top Favourites</h3>
+    {% include 'whichsandwich/sandwich_column.html' with sandwiches=top_favourites %}
+    {% else %}
+    <strong>You have no favourites.</strong>
     {% endif %}
-	<li>Created by <strong>{{ sandwich.creator }}</strong></li>
-    <br/>
-    {% endfor %}
-  </ul>
-  {% else %}
-  <strong>You have no favourites.</strong>
-  {% endif %}
+  </div>
 </div>
+{% endblock %}
 
+{% block script_block %}
+<script src="{% static 'js/modal.js' %}""></script>
 {% endblock %}
