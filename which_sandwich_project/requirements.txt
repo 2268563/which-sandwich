@@ -7,3 +7,4 @@ pilkit==2.0
 Pillow==5.0.0
 pytz==2018.3
 six==1.11.0
+imagekit==1.0.6
