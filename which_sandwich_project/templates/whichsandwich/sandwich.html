@@ -61,7 +61,10 @@
     <h4><a href ="{% url 'comment' sandwich.slug %}">Click here</a> to comment on this sandwich!</h4>
   </div>
   {% endif %}
-
+  <br/>
+  <div class="fb-share-button" data-href="{% url 'show_sandwich' sandwich.slug %}" data-layout="button" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwhichsandwich.pythonanywhere.com%2Fwhichsandwich%2Fbrowse%2F{{ sandwich.slug }}%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+  <br/>
+  <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Check%20out%20this%20tasty%20sandwich!">Tweet</a>
   <div>
     <br/>
     {% if comments %}
@@ -90,5 +93,7 @@
 {% block script_block %}
 <script src="{% static 'js/rate.js' %}"></script>
 <script src="{% static 'js/favourite.js' %}"></script>
+<script src="{% static 'js/share_twitter.js' %}"></script>
+<script src="{% static 'js/share_facebook.js' %}"></script>
 <script src="{% static 'js/jquery-ui.min.js' %}"></script>
 {% endblock %}
