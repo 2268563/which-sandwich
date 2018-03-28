@@ -37,7 +37,7 @@ def user_directory_path(instance, filename):
 class Sandwich(models.Model):
     creator = models.ForeignKey(User, on_delete=models.PROTECT)
     name = models.CharField(max_length=256, unique=True)
-    image = ProcessedImageField(blank=True, upload_to=user_directory_path,
+    image = ProcessedImageField(upload_to=user_directory_path,
             processors=[ResizeToFill(650, 500)],
             format='JPEG',
             options={'quality':80},)
