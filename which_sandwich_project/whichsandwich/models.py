@@ -10,6 +10,11 @@ class Profile(models.Model):
     favourites = models.ManyToManyField('Sandwich', blank=True)
 
     def __str__(self):
+        '''
+        if (self.user == None):
+            self.user = User()
+        '''
+            
         return self.user.username
 
 @receiver(post_save, sender=User)
@@ -37,12 +42,19 @@ class Sandwich(models.Model):
     created_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
+        if (self.name == ''):
+            self.name = 'default_name'
+
         return self.name
 
     class Meta:
         verbose_name_plural = "Sandwiches"
 
     def save(self, *args, **kwargs):
+        if (self.likes < 0):
+            self.likes == 0
+        if (self.dislikes < 0):
+            self.dislikes == 0
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
@@ -54,6 +66,8 @@ class Ingredient(models.Model):
     calories = models.PositiveIntegerField()
 
     def __str__(self):
+        if (self.name == ''):
+            self.name = 'default_name'
         return self.name
 
 class Comment(models.Model):
@@ -62,4 +76,6 @@ class Comment(models.Model):
     comment = models.TextField()
 
     def __str__(self):
+        if (self.comment == ''):
+            self.comment = 'empty_comment'
         return self.comment
