@@ -107,7 +107,7 @@ def controversial(request):
             c_sandwiches.append([c_level, sandwich])
 
     # Sort sandwiches by difference between likes and dislikes
-    c_sandwiches = sorted(c_sandwiches)
+    c_sandwiches = sorted(c_sandwiches, key=lambda s: s[0])
     # Retrieve just the sandwich
     c_sandwiches = [s for c,s in c_sandwiches]
     
