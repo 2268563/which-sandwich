@@ -10,7 +10,7 @@ My Account
 {% include 'whichsandwich/modal.html' %}
 
 <div class="row" id="sandwich_display">
-  <div class="col-md-6">
+  <div class="col-md-6 border-left border-right">
     {% if best_sandwiches %}
     <h3 class="my-4">My Best Received Sandwiches</h3>
     {% include 'whichsandwich/sandwich_column.html' with sandwiches=best_sandwiches %}
@@ -19,7 +19,7 @@ My Account
     {% endif %}
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-6 border-right">
     {% if top_favourites %}
     <h3 class="my-4">My Top Favourites</h3>
     {% include 'whichsandwich/sandwich_column.html' with sandwiches=top_favourites %}
