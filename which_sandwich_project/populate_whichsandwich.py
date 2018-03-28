@@ -14,6 +14,10 @@ from django.core.files import File
 from django.utils.text import slugify
 
 def populate():
+    # Constructs random sandwiches from given ingredients and randomly assigns
+    # users as the creator from a list of given users.
+    # Comments are also randomly assigned to sandwiches from users based on
+    # given comment strings.
     # Returns True if population is completed successfully or False if otherwise
 
     # Make sure we're in the script's directory
@@ -155,8 +159,8 @@ def add_sandwich(sandwich):
     # Add ingredients for new sandwich
     for ingr in ingredients:
         s.ingredients.add(ingr)
-    s.likes = random.randint(0,10)
-    s.dislikes = random.randint(0,5)
+    s.likes = random.randint(0,100)
+    s.dislikes = random.randint(0,50)
 
     s.save()
     image.close()
@@ -190,9 +194,16 @@ def random_comment(users, sandwiches, comments):
     return {'user':user, 'sandwich':sandwich, 'comment':comment}               
 
 def rand_selector(l):
+    # Returns a random element from the given list
     return l[random.randint(0,len(l)-1)]
 
 def rand_selection(items, minimum):
+    # Returns a random selection from the given list.
+    # The minimum number of selections can be passed in.
+    
+    if minimum < 0:
+        minimum = 0
+
     items = items[:]
     total = random.randint(minimum, math.ceil(len(items)/2))
     selected_items = []

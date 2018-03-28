@@ -20,7 +20,7 @@ Create a Sandwich
     <!-- Ingredients Selection Row --> 
     <div class="row">
       <div class="col">
-        <h4>Available</h4>
+        <h4>Available - Drag your selection</h4>
         <div class="ingredients-container border rounded border-dark">
           <div class="list-group" id="available-ingredients">
             {% for value,label in form.get_ingredients %}
@@ -39,9 +39,12 @@ Create a Sandwich
     </div>
     <!-- /.row -->  
   </div>
-  <div class="form-group text-right">
-    {% bootstrap_button "Submit" button_type='submit' %}
-    {% bootstrap_button "Reset" button_type='reset' %}
+  <div class="form-group">
+    <div class="row">
+    <p class="p-2 m-2 ml-auto invisible" id="ingredients-warning">Please choose some ingredients</p>
+    <button id="submitButton" class="btn btn-default m-2" type="submit">Submit</button>
+    <button id="resetButton" class="btn btn-default m-2 mr-3" type="reset">Reset</button>
+    </div>
   </div>
 
 </form>
@@ -51,4 +54,5 @@ Create a Sandwich
 {% block script_block %}
 <script src="{% static 'js/create_sandwich.js' %}"></script>
 <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'js/jquery.ui.touch-punch.min.js' %}"></script>
 {% endblock %}

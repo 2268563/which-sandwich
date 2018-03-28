@@ -16,7 +16,7 @@
   <div class="row">
 
     {% if sandwich.image %}
-    <div class="cold-md-6">
+    <div class="col-md-6">
       <img class="image-fluid img-thumbnail" src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
     </div>
     {% endif %}
@@ -31,7 +31,7 @@
 
       <h3 class="my-3">Sandwich Details</h3>
       <ul>
-        <li>Created by {{ sandwich.creator }}</li>
+        <li>Created by <strong>{{ sandwich.creator }}</strong></li>
         {% if sandwich.likes == 1 %}
         <li><span id="like_count">{{ sandwich.likes }}</span> Likes</li>
         {% else %}
@@ -54,27 +54,34 @@
       <span id="favourite_button"><button id="favourite" sandwich="{{ sandwich.name }}" class="btn btn-primary  btn-sm" type="button">Add to Favourites</button></span>
     {% endif %}
   {% endif %}
-
+  
+  <br/>
+  <div class="fb-share-button" data-href="{% url 'show_sandwich' sandwich.slug %}" data-layout="button" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwhichsandwich.pythonanywhere.com%2Fwhichsandwich%2Fbrowse%2F{{ sandwich.slug }}%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+  <br/>
+  <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Check%20out%20this%20tasty%20sandwich!">Tweet</a>
+  <br/><br/>
+  
+  <div class="container">
+  <h4>Comments</h4>
+  
   {% if user.is_authenticated %}
   <div>
-    <br/>
-    <h4><a href ="{% url 'comment' sandwich.slug %}">Click here</a> to comment on this sandwich!</h4>
+    <h5><a href ="{% url 'comment' sandwich.slug %}">Click here</a> to comment on this sandwich!</h4>
   </div>
   {% endif %}
-
-  <div>
-    <br/>
+  
+	<div class="row">
     {% if comments %}
-    <ul>
       {% for comment in comments %}
-      <li>Submitted by {{ comment.user }}</li>
-      <li>{{ comment.comment }}</li>
-      <br/>
-      {% endfor %}	
-    </ul>
+	  <div class="border-top col-md-12">
+      <p>Submitted by <strong>{{ comment.user }}</strong>:<br/>
+      {{ comment.comment }}</p>
+	  </div>
+      {% endfor %}  
     {% else %}
     There are no comments on this sandwich!
     {% endif %}
+	</div> 
   </div>
 
   {% else %}
@@ -90,5 +97,7 @@
 {% block script_block %}
 <script src="{% static 'js/rate.js' %}"></script>
 <script src="{% static 'js/favourite.js' %}"></script>
+<script src="{% static 'js/share_twitter.js' %}"></script>
+<script src="{% static 'js/share_facebook.js' %}"></script>
 <script src="{% static 'js/jquery-ui.min.js' %}"></script>
 {% endblock %}

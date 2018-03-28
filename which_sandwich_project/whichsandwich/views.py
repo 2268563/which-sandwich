@@ -5,13 +5,15 @@ from django.contrib.auth.decorators import login_required
 from whichsandwich.models import Profile, Sandwich, Ingredient, Comment
 from whichsandwich.forms import UserForm, UserProfileForm, SandwichForm, CommentForm
 from django.urls import reverse
-
+import random
 
 def index(request):
     #http://127.0.0.1:8000/whichsandwich/
 
+    sotd = None
     top_sandwiches = Sandwich.objects.order_by('-likes')
-    sotd = top_sandwiches[0]
+    if top_sandwiches:
+        sotd = top_sandwiches[0]
 
     context_dict = {
             'top_sandwiches': top_sandwiches[1:5],
@@ -24,17 +26,34 @@ def index(request):
     #How do we define sandwich of the day
 
 def browse(request):
+    return render(request, 'whichsandwich/browse.html')
+
+def modal(request):
     context_dict = {}
-    
-    try:
-        # If we can't, the .get() method raises a DoesNotExist exception.
-        sandwiches = Sandwich.objects.all()
-        context_dict['sandwiches'] = sandwiches
-    except Sandwich.DoesNotExist:
-        context_dict['wandwiches'] = None
-        
-    response = render(request, 'whichsandwich/browse.html', context = context_dict)
-    return response
+    if request.method == 'GET':
+        sandwich_id = request.GET['sandwich_id']
+        sandwich = Sandwich.objects.get(id=sandwich_id)
+        context_dict['sandwich'] = sandwich
+        try:
+            comments = Comment.objects.filter(sandwich=sandwich)
+            rand_comment_index = random.randint(0,len(comments) - 1)
+            context_dict['comment'] = comments[rand_comment_index]
+        except (IndexError, ValueError) as e:
+            print(e)
+            context_dict['comment'] = None
+    return render(request, 'whichsandwich/modal.html', context_dict)
+
+def browse_filter(request):
+    sort_filter = None
+    if request.method == 'GET':
+        sort_filter = request.GET['sort_filter']
+    if sort_filter == 'new':
+        return new(request)
+    elif sort_filter == 'controversial':
+        return controversial(request)
+    else:
+        # Top by default
+        return top(request)
 
 def show_sandwich(request, sandwich_slug):
     context_dict = {}
@@ -60,32 +79,41 @@ def top(request):
     top_sandwiches = Sandwich.objects.order_by('-likes')
     
     context_dict = {'sandwiches': top_sandwiches}
-    response = render(request, 'whichsandwich/browse.html', context = context_dict)
+    response = render(request, 'whichsandwich/sandwich_grid.html', context = context_dict)
     return response
 
 def new(request):
-
     new_sandwiches = Sandwich.objects.order_by('-created_date')
     
     context_dict = {'sandwiches': new_sandwiches}
-    response = render(request, 'whichsandwich/browse.html', context = context_dict)
+    response = render(request, 'whichsandwich/sandwich_grid.html', context = context_dict)
     return response
 
 def controversial(request):
-    context_dict = {}
-    controversial_sandwiches = []
-    sandwiches = Sandwich.objects.all() 
+    # Maximum percentage difference between likes and dislikes for controversy
+    max_perc_diff = 25
 
-    #After a set number of likes & dislikes, a sandwich becomes controversial
-    #We then order them starting with those with the closest number of likes & dislikes
-    for i in sandwiches:
-        if i.likes>=5 and i.dislikes>=5:
-            controversial_sandwiches.append(i)
+    # After a set number of likes & dislikes, a sandwich becomes elligible for controversy
+    sandwiches = Sandwich.objects.filter(likes__gt=10, dislikes__gt=10)
 
-    context_dict['sandwiches'] = controversial_sandwiches
+    c_sandwiches = []
+
+    # Get controversial sandwiches
+    for sandwich in sandwiches:
+        delta = abs(sandwich.likes - sandwich.dislikes)
+        avg = (sandwich.likes + sandwich.dislikes)/2
+        c_level = delta/avg*100
+        if c_level <= max_perc_diff:
+            # Add controversial sandwich to list alongside percentage difference
+            # between likes and dislikes
+            c_sandwiches.append([c_level, sandwich])
+
+    # Sort sandwiches by difference between likes and dislikes
+    c_sandwiches = sorted(c_sandwiches, key=lambda s: s[0])
+    # Retrieve just the sandwich
+    c_sandwiches = [s for c,s in c_sandwiches]
     
-    response = render(request, 'whichsandwich/browse.html', context = context_dict)
-    return response
+    return render(request, 'whichsandwich/sandwich_grid.html', {'sandwiches': c_sandwiches})
 
 def sandwich_name(request):
     
@@ -103,28 +131,27 @@ def sandwich_name(request):
 @login_required
 def my_account(request):
     best_sandwiches = Sandwich.objects.filter(creator=request.user).order_by('-likes', 'dislikes')
+    top_favourites = request.user.profile.favourites.all().order_by('-likes', 'dislikes')[0:5]
 
     context_dict = {
             'best_sandwiches': best_sandwiches,
+			'top_favourites': top_favourites,
             }
 
     return render(request, 'whichsandwich/my_account.html', context = context_dict)
 
 @login_required
 def my_sandwiches(request):
-
-    my_sandwiches = Sandwich.objects.filter(creator=request.user)
-
-    context_dict = {'my_sandwiches':my_sandwiches}
-
-    return render(request, 'whichsandwich/my_sandwiches.html',context = context_dict)
+    sandwiches = Sandwich.objects.filter(creator=request.user)
+    context_dict = {'sandwiches': sandwiches}
+    return render(request, 'whichsandwich/my_sandwiches.html',
+            context = context_dict)
 
 @login_required
 def my_favourites(request):
     context_dict = {}
     favourites = request.user.profile.favourites.all()
-    print(favourites)
-    context_dict['favourites'] = favourites
+    context_dict['sandwiches'] = favourites
     return render(request, 'whichsandwich/my_favourites.html', context=context_dict)
 
 @login_required
@@ -152,8 +179,7 @@ def about(request):
 
 @login_required
 def comment(request, sandwich_slug):
-    creator = request.user
-    creator = Profile.objects.get(user=creator)
+    creator = request.user.profile
     sandwich = Sandwich.objects.get(slug=sandwich_slug)
     form = CommentForm()
 

@@ -20,3 +20,12 @@ body {
 #available-ingredients, #used-ingredients {
   height: 100%;
 }
+
+.image-overlay {
+  position: absolute;
+  background-color: rgba(0,0,0,0.6);
+  color: white;
+  margin: 0.5em;
+  padding: 0.2em;
+  width:70%;
+}
