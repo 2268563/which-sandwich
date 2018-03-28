@@ -1,5 +1,15 @@
 # Which Sandwich
 
+## External Sources/Libraries/APIs
+* django-bootstrap4
+* django-imagekit
+* django-registration-redux
+* Pillow
+* Facebook and Twitter APIs for sharing
+* Stack Overflow for reference
+* JQuery
+* Bootstrap4 directly (not django-bootstrap4 above)
+
 ## Setting Up the Virtual Environment
 
 1. Check that you have Python 3.x installed with `python --version`.
@@ -29,7 +39,7 @@ To reset everything to a clean database just delete the db.sqlite3 file and perf
 
 #### Wireframes
 
-* [Home](https://www.draw.io/#Uhttps%3A%2F%2Fraw.githubusercontent.com%2F2268563%2Fwhich-sandwich%2Fmaster%2Fspecification%2Fspecification%2Fwireframes%2Fhome.xml)
+* [Home](https://www.draw.io/#Uhttps%3A%2F%2Fraw.githubusercontent.com%2F2268563%2Fwhich-sandwich%2Fmaster%2Fspecification%2Fwireframes%2Fhome.xml)
 
 * [Make Sandwich](https://www.draw.io/#Uhttps%3A%2F%2Fraw.githubusercontent.com%2F2268563%2Fwhich-sandwich%2Fmaster%2Fspecification%2Fwireframes%2Fmake_sandwich.xml)
 
