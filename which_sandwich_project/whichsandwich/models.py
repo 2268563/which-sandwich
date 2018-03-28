@@ -37,7 +37,7 @@ def user_directory_path(instance, filename):
 class Sandwich(models.Model):
     creator = models.ForeignKey(User, on_delete=models.PROTECT)
     name = models.CharField(max_length=256, unique=True)
-    image = ProcessedImageField(blank=True, upload_to=user_directory_path,
+    image = ProcessedImageField(upload_to=user_directory_path,
             processors=[ResizeToFill(650, 500)],
             format='JPEG',
             options={'quality':80},)
@@ -82,6 +82,7 @@ class Ingredient(models.Model):
     def save(self, *args, **kwargs):
         if (self.calories < 0):
             self.calories = 0
+        super().save(*args, **kwargs)
 
 class Comment(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.PROTECT)

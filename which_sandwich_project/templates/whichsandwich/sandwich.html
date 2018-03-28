@@ -10,18 +10,16 @@
 <div>
   {% if sandwich %}
   <h1 class="my-4">{{ sandwich.name }}
-    <small>Sandwich</small>
   </h1>
 
   <div class="row">
-
     {% if sandwich.image %}
     <div class="col-md-6">
       <img class="image-fluid img-thumbnail" src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
     </div>
     {% endif %}
 
-    <div class="col-md-6"> 
+    <div class="col-md-6 pl-5"> 
       <h3 class="my-3">Ingredients</h3>
       <ul>
         {% for ingredient in sandwich.ingredients.all %}
@@ -47,41 +45,56 @@
     </div>
   </div>
 
-  <button id="like" sandwich="{{ sandwich.name }}" class="btn btn-primary  btn-sm" type="button">Like</button>
-  <button id="dislike" sandwich="{{ sandwich.name }}" class="btn btn-primary  btn-sm" type="button">Dislike</button>
-  {% if user.is_authenticated %}
-    {% if sandwich not in favourites %}
-      <span id="favourite_button"><button id="favourite" sandwich="{{ sandwich.name }}" class="btn btn-primary  btn-sm" type="button">Add to Favourites</button></span>
-    {% endif %}
-  {% endif %}
-  
-  <br/>
-  <div class="fb-share-button" data-href="{% url 'show_sandwich' sandwich.slug %}" data-layout="button" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwhichsandwich.pythonanywhere.com%2Fwhichsandwich%2Fbrowse%2F{{ sandwich.slug }}%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-  <br/>
-  <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Check%20out%20this%20tasty%20sandwich!">Tweet</a>
-  <br/><br/>
-  
-  <div class="container">
-  <h4>Comments</h4>
-  
-  {% if user.is_authenticated %}
-  <div>
-    <h5><a href ="{% url 'comment' sandwich.slug %}">Click here</a> to comment on this sandwich!</h4>
+  <div class="row text-center">
+    <div class="col-md-6 mx-auto">
+      <button id="like" sandwich="{{ sandwich.name }}" class="btn btn-primary btn-sm m-2" type="button">Like</button>
+      <button id="dislike" sandwich="{{ sandwich.name }}" class="btn btn-primary btn-sm m-2" type="button">Dislike</button>
+      {% if user.is_authenticated %}
+      {% if sandwich not in favourites %}
+      <span id="favourite_button"><button id="favourite" sandwich="{{ sandwich.name }}" class="btn btn-primary btn-sm m-2" type="button">Add to Favourites</button></span>
+      {% endif %}
+      {% endif %}
+    </div>
+    <div class="col-md-6">
+    </div>
   </div>
-  {% endif %}
-  
-	<div class="row">
-    {% if comments %}
-      {% for comment in comments %}
-	  <div class="border-top col-md-12">
-      <p>Submitted by <strong>{{ comment.user }}</strong>:<br/>
-      {{ comment.comment }}</p>
-	  </div>
-      {% endfor %}  
-    {% else %}
-    There are no comments on this sandwich!
+
+  <div class="row text-center">
+    <div class="col-md-6">
+      <div class="fb-share-button" data-href="{% url 'show_sandwich' sandwich.slug %}" data-layout="button" data-mobile-iframe="true">
+        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwhichsandwich.pythonanywhere.com%2Fwhichsandwich%2Fbrowse%2F{{ sandwich.slug }}%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a>
+      </div>
+      <div>
+        <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Check%20out%20this%20tasty%20sandwich!">Tweet</a>
+      </div>
+    </div>
+    <div class="col-md-6">
+    </div>
+  </div>
+
+  <br/>
+
+  <div class="container">
+    <h4>Comments</h4>
+
+    {% if user.is_authenticated %}
+    <div>
+      <h5><a href ="{% url 'comment' sandwich.slug %}">Click here</a> to comment on this sandwich!</h4>
+    </div>
     {% endif %}
-	</div> 
+
+    <div class="row">
+      {% if comments %}
+      {% for comment in comments %}
+      <div class="border-top col-md-12">
+        <p>Submitted by <strong>{{ comment.user }}</strong>:<br/>
+        {{ comment.comment }}</p>
+      </div>
+      {% endfor %}  
+      {% else %}
+      There are no comments on this sandwich!
+      {% endif %}
+    </div> 
   </div>
 
   {% else %}
