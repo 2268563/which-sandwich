@@ -10,8 +10,10 @@ import random
 def index(request):
     #http://127.0.0.1:8000/whichsandwich/
 
+    sotd = None
     top_sandwiches = Sandwich.objects.order_by('-likes')
-    sotd = top_sandwiches[0]
+    if top_sandwiches:
+        sotd = top_sandwiches[0]
 
     context_dict = {
             'top_sandwiches': top_sandwiches[1:5],

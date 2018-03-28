@@ -13,6 +13,7 @@ Home
 
 <div class="row" height=400px>
 
+  {% if sotd %}
   <div class="col-md-6">
     <a href="{% url 'show_sandwich' sotd.slug %}">
       <h4 class="image-overlay">{{ sotd.name }}</h4>
@@ -28,6 +29,9 @@ Home
       {% endfor %}
     </ul>
   </div>
+  {% else %}
+  <strong>There is no sandwich of the day :(</strong>
+  {% endif %}
 
 </div>
 
@@ -47,7 +51,7 @@ Home
   {% endfor %}
 
   {% else %}
-  <strong>There are no sandwiches present.</strong>
+  <strong>There are no sandwiches present</strong>
   {% endif %}
 
 </div>
