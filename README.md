@@ -22,6 +22,8 @@ We're using Python 3.x and Django 2.0.2 for this project.
 
 The database file is not committed to GitHub.
 
+If migrations need to be made first, run `python manage.py makemigrations whichsandwich`.
+
 1. Run `python manage.py migrate` to build the database schema from the models.
 2. Create an admin profile with `python manage.py createsuperuser`.
 3. Run the population script with `python populate_whichsandwich.py`.
