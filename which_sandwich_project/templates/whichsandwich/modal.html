@@ -11,7 +11,13 @@
         <div class="container">
           <div class="row">
             <div class="col-lg-8">
-              <img class="img-fluid img-thumbnail" src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
+              {% if sandwich %}
+              <a href="{% url 'show_sandwich' sandwich.slug %}">
+                {% endif %}
+                <img class="img-fluid img-thumbnail" src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
+                {% if sandwich %}
+              </a>
+              {% endif %}
             </div>
             <div class="col-lg-4">
               <p>Made by {{ sandwich.creator }}</p>
@@ -31,7 +37,18 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+        <div class="container">
+          <div class="row">
+            {% if sandwich %}
+            <div class="col-sm-3 col-md-6 float-right pt-2">
+              <a href="{% url 'show_sandwich' sandwich.slug %}">Check out this sandwich's page for comments</a>
+            </div>
+            {% endif %}
+            <div class="col-md-6">
+              <button class="btn btn-secondary float-right" type="button" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
