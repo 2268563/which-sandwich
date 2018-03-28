@@ -1,0 +1,38 @@
+<div class="modal fade" id="sandwichModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sandwich-modal-title">{{ sandwich.name }}</h5>  
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8">
+              <img class="img-fluid img-thumbnail" src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
+            </div>
+            <div class="col-lg-4">
+              <p>Made by {{ sandwich.creator }}</p>
+              <p>Ingredients:</p>
+              <ul>
+                {% for ingredient in sandwich.ingredients.all %}
+                <li>{{ ingredient }}</li>
+                {% endfor %}
+              </ul>
+
+              {% if comment %}
+              {{ comment.user }} says:
+              <p class="bg-light p-2">{{ comment.comment }}</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

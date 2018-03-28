@@ -26,7 +26,7 @@ def index(request):
 def browse(request):
     return render(request, 'whichsandwich/browse.html')
 
-def modal_sandwich(request):
+def modal(request):
     context_dict = {}
     if request.method == 'GET':
         sandwich_id = request.GET['sandwich_id']
@@ -39,7 +39,7 @@ def modal_sandwich(request):
         except (IndexError, ValueError) as e:
             print(e)
             context_dict['comment'] = None
-    return render(request, 'whichsandwich/modal_sandwich.html', context_dict)
+    return render(request, 'whichsandwich/modal.html', context_dict)
 
 def browse_filter(request):
     sort_filter = None
