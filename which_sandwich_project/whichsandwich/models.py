@@ -82,6 +82,7 @@ class Ingredient(models.Model):
     def save(self, *args, **kwargs):
         if (self.calories < 0):
             self.calories = 0
+        super().save(*args, **kwargs)
 
 class Comment(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.PROTECT)
