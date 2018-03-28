@@ -20,18 +20,41 @@
               {% endif %}
             </div>
             <div class="col-lg-4">
-              <p>Made by {{ sandwich.creator }}</p>
-              <p>Ingredients:</p>
-              <ul>
-                {% for ingredient in sandwich.ingredients.all %}
-                <li>{{ ingredient }}</li>
-                {% endfor %}
-              </ul>
+              <div class="container">
+                <div class="row border-bottom py-2">
+                  <div class="col">
+                    <div>Made by <strong>{{ sandwich.creator }}</strong></div>
+                  </div>
+                </div>
+                <div class="row border-bottom py-2">
+                  <div class="col">
+                    <div class="p-1">Ingredients:</div>
+                    <ul class="mb-0">
+                      {% for ingredient in sandwich.ingredients.all %}
+                      <li>{{ ingredient }}</li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
 
-              {% if comment %}
-              {{ comment.user }} says:
-              <p class="bg-light p-2">{{ comment.comment }}</p>
-              {% endif %}
+                <div class="row border-bottom py-2">
+                  <div class="col">
+                    <div>Likes: {{ sandwich.likes }}
+                    <br/> 
+                    Dislikes: {{ sandwich.dislikes }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row py-2">
+                  <div class="col">
+                    {% if comment %}
+                    {{ comment.user }} says:
+                    <div class="bg-light p-2">{{ comment.comment }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
