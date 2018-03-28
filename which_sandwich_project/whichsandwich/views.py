@@ -142,12 +142,10 @@ def my_account(request):
 
 @login_required
 def my_sandwiches(request):
-
-    my_sandwiches = Sandwich.objects.filter(creator=request.user)
-
-    context_dict = {'my_sandwiches':my_sandwiches}
-
-    return render(request, 'whichsandwich/my_sandwiches.html',context = context_dict)
+    sandwiches = Sandwich.objects.filter(creator=request.user)
+    context_dict = {'sandwiches': sandwiches}
+    return render(request, 'whichsandwich/my_sandwiches.html',
+            context = context_dict)
 
 @login_required
 def my_favourites(request):
