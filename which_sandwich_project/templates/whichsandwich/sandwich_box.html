@@ -1,8 +1,4 @@
-<a href="#!">
-  <h4 class="image-overlay">{{ sandwich.name }}</h4>
-  {% if sandwich.image %}
-  <img class="img-fluid img-thumbnail" src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
-  {% else %}
-  {{ sandwich.name }}
-  {% endif %}
-</a>
+<h4 class="image-overlay">{{ sandwich.name }}</h4>
+{% if sandwich.image %}
+<img class="img-fluid img-thumbnail" src="{{ sandwich.image.url }}" alt="{{ sandwich.name }}" />
+{% endif %}

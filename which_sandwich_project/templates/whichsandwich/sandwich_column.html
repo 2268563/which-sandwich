@@ -1,7 +1,9 @@
 {% if sandwiches %}
 {% for sandwich in sandwiches %}
 <div class="sandwich col-md-6 pb-4 float-left" id="{{ sandwich.id }}" name="{{ sandwich.name }}">
-  {% include 'whichsandwich/sandwich_box.html' %}
+  <a href="#!">
+    {% include 'whichsandwich/sandwich_box.html' %}
+  </a>
 </div>
 {% endfor %}
 {% else %}
