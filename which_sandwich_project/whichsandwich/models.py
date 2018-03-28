@@ -57,10 +57,12 @@ class Sandwich(models.Model):
         verbose_name_plural = "Sandwiches"
 
     def save(self, *args, **kwargs):
+        
         if (self.likes < 0):
-            self.likes == 0
+            self.likes = 0
         if (self.dislikes < 0):
-            self.dislikes == 0
+            self.dislikes = 0
+        
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 

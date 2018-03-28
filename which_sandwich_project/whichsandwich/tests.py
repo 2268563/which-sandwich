@@ -15,28 +15,34 @@ class SandwichMethodTests(TestCase):
     def test_slug_line_creation(self):
         #slug_line_creation checks to make sure that when we add a category an appropriate slug line is created
         #i.e. "Random Category String" -> "random-category-string"
-        
-        sd = Sandwich(creator = User(), slug='Random Sandwich String')
+        user = User.objects.create_user(username = 'max',
+                                        email = 'max@test.com',
+                                        password = 'mario')
+        sd = Sandwich(creator = user, slug='Random Sandwich String')
         sd.save()
-        self.assertEqual(Sandwich.slug, 'random-category-string')
+        self.assertEqual(Sandwich.slug, 'random-sandwich-string')
     '''
     def test_ensure_sandwich_has_name(self):
         sd = Sandwich(name= '')
         sd.__str__()
         self.assertEqual((sd.name != ''), True)
-'''
+
     def test_ensure_likes_are_positive(self):
-        user = User()
-        sd_likes = Sandwich( likes=-1)
+        user = User.objects.create_user(username = 'max',
+                                        email = 'max@test.com',
+                                        password = 'mario')
+        sd_likes = Sandwich(creator = user, likes=-1)
         sd_likes.save()
-        self.assertEqual((sd_likes >= 0), True)
+        self.assertEqual((sd_likes.likes >= 0), True)
 
     def test_ensure_dislikes_are_positive(self):
-        user = Profile()
-        sd_dislikes = Sandwich( dislikes=-1)
+        user = User.objects.create_user(username = 'max',
+                                        email = 'max@test.com',
+                                        password = 'mario')
+        sd_dislikes = Sandwich(creator = user, dislikes=-1)
         sd_dislikes.save()
-        self.assertEqual((sd_dislikes >= 0), True)
-'''
+        self.assertEqual((sd_dislikes.dislikes >= 0), True)
+
     
 
 class IngredientMethodTests(TestCase):
