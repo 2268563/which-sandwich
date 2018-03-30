@@ -9,6 +9,8 @@
 * Stack Overflow for reference
 * JQuery
 * Bootstrap4 directly (not django-bootstrap4 above)
+* JQuery-UI for the drag and drop functionality
+* JQuery-UI-Touch-Punch to enable drag and drop on touch devices
 
 ## Setting Up the Virtual Environment
 
